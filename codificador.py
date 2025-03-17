@@ -88,12 +88,17 @@ st.markdown("""
 st.markdown("""
 Bienvenido al Codificador - Dra. Javiersa Saavedra Nazer –  
 Utiliza la barra lateral para filtrar las entradas por **fuente** mediante el menú desplegable y el menú de búsqueda a continuación para encontrar rápidamente textos o títulos específicos.
+
+**[LinkedIn de la Dra. Javiersa Saavedra Nazer](https://www.linkedin.com/in/javiera-saavedra-nazer-md-faadv-582a7448/)**
 """)
 
-# Cargar datos del glosario
+# Cargar datos del glosario comprobando si el archivo existe.
 @st.cache_data
 def load_glosary():
     file_path_glosary = "DIAGNOSIS text_fulll.xlsx"  # Actualiza el nombre del archivo si es necesario
+    if not os.path.exists(file_path_glosary):
+        st.error(f"El archivo '{file_path_glosary}' no se encontró. Asegúrate de que esté subido en el repositorio.")
+        return pd.DataFrame()  # Retorna un DataFrame vacío para evitar errores posteriores.
     return pd.read_excel(file_path_glosary)
 
 df_glosary = load_glosary()
