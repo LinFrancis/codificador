@@ -88,8 +88,7 @@ st.markdown("""
 
 st.markdown("""
 Bienvenido al Codificador - Dra. Javiersa Saavedra Nazer –  
-Utiliza la barra lateral para filtrar las entradas por **fuente** mediante el menú desplegable.  
-Utiliza el campo de búsqueda avanzado a continuación para ingresar uno o varios términos (puedes usar "AND" u "OR") y encontrar rápidamente textos o títulos que contengan esos términos.
+Utiliza la barra lateral para filtrar las entradas por **fuente** mediante el menú desplegable y utiliza el campo de búsqueda avanzado a continuación para ingresar uno o varios términos (usa "AND" u "OR") y encontrar rápidamente textos o títulos que contengan esos términos.
 
 **[LinkedIn de la Dra. Javiersa Saavedra Nazer](https://www.linkedin.com/in/javiera-saavedra-nazer-md-faadv-582a7448/)**
 """)
@@ -97,7 +96,7 @@ Utiliza el campo de búsqueda avanzado a continuación para ingresar uno o vario
 # Cargar datos del glosario
 @st.cache_data
 def load_glosary():
-    file_path_glosary = "DIAGNOSIS TEXT_full.xlsx"  # Asegúrate de que el nombre y ruta sean exactos
+    file_path_glosary = "DIAGNOSIS TEXT_full.xlsx"  # Asegúrate que el nombre y la ruta sean exactos
     if not os.path.exists(file_path_glosary):
         st.error(f"El archivo '{file_path_glosary}' no se encontró. Asegúrate de que esté subido en el repositorio.")
         st.stop()
@@ -112,24 +111,24 @@ st.sidebar.markdown("<h2 class='sidebar-header'>Filtros</h2>", unsafe_allow_html
 fuentes = sorted(df_glosary["source"].dropna().astype(str).unique())
 fuente_seleccionada = st.sidebar.selectbox("Filtrar por fuente:", options=["None"] + fuentes)
 
-# Filtrar según fuente si se selecciona
+# Filtrar según fuente
 if fuente_seleccionada != "None":
     df_filtrado = df_glosary[df_glosary["source"].astype(str) == fuente_seleccionada].copy()
 else:
     df_filtrado = df_glosary.copy()
 
 # -------------------------------
-# Búsqueda avanzada (texto libre)
+# Búsqueda avanzada (texto libre) con autocompletado
 # -------------------------------
 st.markdown("### Búsqueda avanzada")
 operador = st.selectbox("Operador lógico:", options=["AND", "OR"], index=0)
 
-# Campo de búsqueda con autocompletado (simulado)
-if "search_query" not in st.session_state:
-    st.session_state["search_query"] = ""
-search_query = st.text_input("Ingrese término(s) de búsqueda:", value=st.session_state["search_query"], key="search_query")
+# Usamos una variable separada para el valor por defecto del campo de búsqueda
+if "search_query_default" not in st.session_state:
+    st.session_state["search_query_default"] = ""
 
-# Función para obtener sugerencias simples a partir de la columna "text"
+search_query = st.text_input("Ingrese término(s) de búsqueda:", value=st.session_state["search_query_default"], key="search_query")
+
 def get_suggestions(query, df):
     suggestions = set()
     if query:
@@ -144,20 +143,17 @@ if sugerencias:
     st.markdown("**Sugerencias:**")
     for sug in sugerencias:
         if st.button(sug, key=f"sugg_{sug}"):
-            st.session_state["search_query"] = sug
-            search_query = sug
+            st.session_state["search_query_default"] = sug
+            st.rerun()
 
 # Función para resaltar términos en el texto
 def resaltar_texto(texto, terminos):
     for t in terminos:
-        if t.lower() in texto.lower():
-            # Reemplaza la coincidencia exacta ignorando mayúsculas/minúsculas
-            texto = texto.replace(t, f"<span style='background-color:yellow'>{t}</span>")
+        texto = texto.replace(t, f"<span style='background-color:yellow'>{t}</span>")
     return texto
 
 # Función para evaluar cada fila usando fuzzy matching
 def match_row(row, terminos, operador="AND", umbral=70):
-    # Combina las columnas de interés en un solo string
     campos = [str(row[col]) for col in ["source", "text", "group", "code"] if col in row and pd.notnull(row[col])]
     combinado = " ".join(campos).lower()
     if operador == "AND":
@@ -165,10 +161,10 @@ def match_row(row, terminos, operador="AND", umbral=70):
     else:
         return any(fuzz.partial_ratio(t.lower(), combinado) >= umbral for t in terminos)
 
-# Separar términos de búsqueda (si se ingresa más de uno, usando espacios)
+# Separar términos de búsqueda (múltiples palabras)
 terminos_busqueda = [t.strip() for t in search_query.split() if t.strip()]
 
-# Aplicar el filtro fuzzy si se ingresaron términos
+# Aplicar filtro fuzzy si se ingresaron términos
 if terminos_busqueda:
     df_filtered_fuzzy = df_filtrado[df_filtrado.apply(lambda row: match_row(row, terminos_busqueda, operador), axis=1)]
 else:
@@ -188,7 +184,6 @@ if fuente_seleccionada == "None" and not terminos_busqueda:
 else:
     if not df_filtered_fuzzy.empty:
         for idx, row in df_filtered_fuzzy.iterrows():
-            # Resaltar los términos en cada campo
             code_resaltado = resaltar_texto(str(row['code']), terminos_busqueda)
             text_resaltado = resaltar_texto(str(row['text']), terminos_busqueda)
             group_resaltado = resaltar_texto(str(row['group']), terminos_busqueda)
