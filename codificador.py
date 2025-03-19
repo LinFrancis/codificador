@@ -82,7 +82,7 @@ st.markdown(
 # Título y descripción (con contenedor de degradado)
 st.markdown("""
 <div class="title-container">
-    <h1 class="title-text">Codificador 3000 _Dra. Javiera Saavedra Nazer_</h1>
+    <h1 class="title-text">Codificador 3000 Dra. Javiera Saavedra Nazer</h1>
 </div>
 """, unsafe_allow_html=True)
 
