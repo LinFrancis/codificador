@@ -6,7 +6,7 @@ import os
 from rapidfuzz import fuzz  # Asegúrate de tener instalado rapidfuzz
 
 st.set_page_config(
-    page_title="Codificador - Dra. Javiersa Saavedra Nazer",
+    page_title="Codificador 3000 - Dra. Javiera Saavedra Nazer",
     layout="wide",
     initial_sidebar_state="expanded"
 )
@@ -82,12 +82,12 @@ st.markdown(
 # Título y descripción (con contenedor de degradado)
 st.markdown("""
 <div class="title-container">
-    <h1 class="title-text">Codificador - Dra. Javiersa Saavedra Nazer</h1>
+    <h1 class="title-text">Codificador 3000 _Dra. Javiera Saavedra Nazer_</h1>
 </div>
 """, unsafe_allow_html=True)
 
 st.markdown("""
-Bienvenido al Codificador - Dra. Javiersa Saavedra Nazer –  
+Bienvenido al Codificador 3000–  
 Utiliza la barra lateral para filtrar las entradas por **fuente** mediante el menú desplegable y utiliza el campo de búsqueda avanzado a continuación para ingresar uno o varios términos (usa "AND" u "OR") y encontrar rápidamente textos o títulos que contengan esos términos.
 
 **[LinkedIn de la Dra. Javiersa Saavedra Nazer](https://www.linkedin.com/in/javiera-saavedra-nazer-md-faadv-582a7448/)**
