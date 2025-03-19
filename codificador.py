@@ -1,9 +1,8 @@
 import streamlit as st
 import pandas as pd
-import datetime
-import csv
 import os
 from rapidfuzz import fuzz  # Asegúrate de tener instalado rapidfuzz
+import streamlit.components.v1 as components
 
 st.set_page_config(
     page_title="Codificador - Dra. Javiersa Saavedra Nazer",
@@ -79,6 +78,24 @@ st.markdown(
     unsafe_allow_html=True
 )
 
+# Inyectar JavaScript usando st.components.v1.html para que se ejecute correctamente.
+components.html(
+    """
+    <script>
+    function copyToClipboard(elementId) {
+      var text = document.getElementById(elementId).innerText;
+      navigator.clipboard.writeText(text).then(function() {
+        alert("Copied to clipboard!");
+      }, function(err) {
+        console.error('Could not copy text: ', err);
+      });
+    }
+    </script>
+    """,
+    height=0,
+    scrolling=False,
+)
+
 # Título y descripción (con contenedor de degradado)
 st.markdown("""
 <div class="title-container">
@@ -92,6 +109,14 @@ Utiliza la barra lateral para filtrar las entradas por **fuente** mediante el me
 
 **[LinkedIn de la Dra. Javiersa Saavedra Nazer](https://www.linkedin.com/in/javiera-saavedra-nazer-md-faadv-582a7448/)**
 """)
+
+# Inicializar el historial de búsqueda en la sesión
+if "search_history" not in st.session_state:
+    st.session_state["search_history"] = []
+
+# Variable para mantener el valor por defecto de búsqueda
+if "search_query_default" not in st.session_state:
+    st.session_state["search_query_default"] = ""
 
 # Cargar datos del glosario
 @st.cache_data
@@ -120,14 +145,28 @@ else:
 # -------------------------------
 # Búsqueda avanzada (texto libre) con autocompletado
 # -------------------------------
-st.markdown("### Búsqueda avanzada")
-operador = st.selectbox("Operador lógico:", options=["AND", "OR"], index=0)
+st.sidebar.markdown("### Búsqueda avanzada")
+operador = st.sidebar.selectbox("Operador lógico:", options=["AND", "OR"], index=0)
 
-# Usamos una variable separada para el valor por defecto del campo de búsqueda
-if "search_query_default" not in st.session_state:
-    st.session_state["search_query_default"] = ""
+# Campo de búsqueda en la barra lateral
+search_query = st.sidebar.text_input("Ingrese término(s) de búsqueda:", value=st.session_state["search_query_default"], key="search_query")
 
-search_query = st.text_input("Ingrese término(s) de búsqueda:", value=st.session_state["search_query_default"], key="search_query")
+# Botón para guardar la búsqueda actual en el historial
+if st.sidebar.button("Guardar búsqueda"):
+    query = search_query.strip()
+    if query and query not in st.session_state["search_history"]:
+        st.session_state["search_history"].append(query)
+        st.success("Búsqueda guardada en el historial.")
+
+# Expander para mostrar el historial de búsquedas
+with st.sidebar.expander("Historial de búsquedas"):
+    if st.session_state["search_history"]:
+        for i, hist in enumerate(st.session_state["search_history"]):
+            if st.button(hist, key=f"history_{i}"):
+                st.session_state["search_query_default"] = hist
+                st.rerun()
+    else:
+        st.write("No hay búsquedas guardadas aún.")
 
 def get_suggestions(query, df):
     suggestions = set()
@@ -172,7 +211,8 @@ else:
 
 st.subheader("Resultados de búsqueda del glosario")
 
-# Mostrar resultados con términos resaltados
+# Mostrar resultados con términos resaltados y código en mayúsculas.
+# Solo se copiará la información del campo "text"
 if fuente_seleccionada == "None" and not terminos_busqueda:
     st.info(
         "No se han seleccionado filtros. "
@@ -184,22 +224,26 @@ if fuente_seleccionada == "None" and not terminos_busqueda:
 else:
     if not df_filtered_fuzzy.empty:
         for idx, row in df_filtered_fuzzy.iterrows():
-            code_resaltado = resaltar_texto(str(row['code']), terminos_busqueda)
+            # Convertir la información del campo "code" a mayúsculas antes de resaltar
+            code_resaltado = resaltar_texto(str(row['code']).upper(), terminos_busqueda)
+            # Solo se copiará el contenido del campo "text"
             text_resaltado = resaltar_texto(str(row['text']), terminos_busqueda)
             group_resaltado = resaltar_texto(str(row['group']), terminos_busqueda)
             source_resaltado = resaltar_texto(str(row['source']), terminos_busqueda)
             link_html = ""
             if pd.notnull(row.get('Link')):
                 link_html = " | <a href='" + str(row['Link']) + "' target='_blank'>Más información</a>"
+            
             st.markdown(
                 f"""
                 <div class="card">
                     <div class="card-title">{code_resaltado}</div>
-                    <div class="card-text">{text_resaltado}</div>
+                    <div class="card-text" id="card_text_{idx}">{text_resaltado}</div>
                     <div class="card-footer">
                         <strong>grupo:</strong> {group_resaltado} | 
                         <strong>fuente:</strong> {source_resaltado} {link_html}
                     </div>
+                    <button onclick="copyToClipboard('card_text_{idx}')" style="font-size:10px; padding:2px 5px; margin-top:5px;">Copy</button>
                 </div>
                 """, unsafe_allow_html=True)
         if st.checkbox("Mostrar tabla completa", key="full_table_filtered"):
