@@ -91,7 +91,7 @@ Bienvenido al Codificador 3000
  
 Utiliza la barra lateral para filtrar las entradas por **fuente** mediante el menú desplegable y utiliza el campo de búsqueda avanzado a continuación para ingresar uno o varios términos (usa "AND" u "OR") y encontrar rápidamente textos o títulos que contengan esos términos.
 
-**[LinkedIn de la Dra. Javiersa Saavedra Nazer](https://www.linkedin.com/in/javiera-saavedra-nazer-md-faadv-582a7448/)**
+**[LinkedIn de la Dra. Javiera Saavedra Nazer](https://www.linkedin.com/in/javiera-saavedra-nazer-md-faadv-582a7448/)**
 """)
 
 # Inicializar el historial de búsqueda en la sesión
