@@ -126,6 +126,14 @@ if fuente_seleccionada != "None":
 else:
     df_filtrado = df_glosary.copy()
 
+grupo = sorted(df_filtrado["grupo"].dropna().astype(str).unique())
+grupo_seleccionada = st.sidebar.selectbox("Filtrar por grupo:", options=["None"] + grupo)
+
+if grupo_seleccionada != "None":
+    df_filtrado = df_filtrado[df_filtrado["grupo"].astype(str) == grupo_seleccionada].copy()
+
+
+
 # -------------------------------
 # Búsqueda avanzada (texto libre) con autocompletado
 # -------------------------------
