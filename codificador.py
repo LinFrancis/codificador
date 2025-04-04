@@ -130,7 +130,7 @@ grupo = sorted(df_filtrado["group"].dropna().astype(str).unique())
 grupo_seleccionada = st.sidebar.selectbox("Filtrar por grupo:", options=["None"] + grupo)
 
 if grupo_seleccionada != "None":
-    df_filtrado = df_filtrado[df_filtrado["grupo"].astype(str) == grupo_seleccionada].copy()
+    df_filtrado = df_filtrado[df_filtrado["group"].astype(str) == grupo_seleccionada].copy()
 
 
 
