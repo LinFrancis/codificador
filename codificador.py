@@ -207,7 +207,7 @@ else:
 st.subheader("Resultados de búsqueda del glosario")
 
 # Mostrar resultados con términos resaltados y código en mayúsculas
-if fuente_seleccionada == "None" and not terminos_busqueda:
+if not fuentes_seleccionadas and not terminos_busqueda:
     st.info(
         "No se han seleccionado filtros. "
         "Por favor, elige una fuente en la barra lateral o ingresa un término de búsqueda. "
