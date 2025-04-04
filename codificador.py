@@ -87,11 +87,13 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 st.markdown("""
-Bienvenida Dra. Javiera Saavedra Nazer. Soy el codificator 3001 y estoy a tu servicio.
- 
-Utiliza la barra lateral para filtrar las entradas por **fuente** y/o **grupo** mediante el menú desplegable y utiliza el campo de búsqueda avanzado a continuación para ingresar uno o varios términos (usa "AND" u "OR") y encontrar rápidamente textos o títulos que contengan esos términos.
+**Bienvenida Dra. Javiera Saavedra Nazer**   
+Soy el **Codificator 3001 🤖** y estoy a **su servicio**.
 
-**[LinkedIn de la Dra. Javiera Saavedra Nazer](https://www.linkedin.com/in/javiera-saavedra-nazer-md-faadv-582a7448/)**
+🔍 Utilice la **barra lateral** para filtrar las entradas por **fuente** y/o **grupo** mediante los menús desplegables.  
+🧠 También puede usar el campo de **búsqueda avanzada** a continuación para ingresar uno o varios términos (use `"AND"` o `"OR"`) y encontrar rápidamente textos o títulos que los contengan.
+
+📎 [**LinkedIn de la Dra. Javiera Saavedra Nazer**](https://www.linkedin.com/in/javiera-saavedra-nazer-md-faadv-582a7448/)
 """)
 
 # Inicializar el historial de búsqueda en la sesión
@@ -117,21 +119,22 @@ df_glosary = load_glosary()
 # Barra lateral: Opciones de filtrado
 # -------------------------------
 st.sidebar.markdown("<h2 class='sidebar-header'>Filtros</h2>", unsafe_allow_html=True)
-fuentes = sorted(df_glosary["source"].dropna().astype(str).unique())
-fuente_seleccionada = st.sidebar.selectbox("Filtrar por fuente:", options=["None"] + fuentes)
 
-# Filtrar según fuente
-if fuente_seleccionada != "None":
-    df_filtrado = df_glosary[df_glosary["source"].astype(str) == fuente_seleccionada].copy()
+# Filtro por fuente (source)
+fuentes = sorted(df_glosary["source"].dropna().astype(str).unique())
+fuentes_seleccionadas = st.sidebar.multiselect("Filtrar por fuente(s):", options=fuentes)
+
+if fuentes_seleccionadas:
+    df_filtrado = df_glosary[df_glosary["source"].astype(str).isin(fuentes_seleccionadas)].copy()
 else:
     df_filtrado = df_glosary.copy()
 
-grupo = sorted(df_filtrado["group"].dropna().astype(str).unique())
-grupo_seleccionada = st.sidebar.selectbox("Filtrar por grupo:", options=["None"] + grupo)
+# Filtro por grupo (group)
+grupos = sorted(df_filtrado["group"].dropna().astype(str).unique())
+grupos_seleccionados = st.sidebar.multiselect("Filtrar por grupo(s):", options=grupos)
 
-if grupo_seleccionada != "None":
-    df_filtrado = df_filtrado[df_filtrado["group"].astype(str) == grupo_seleccionada].copy()
-
+if grupos_seleccionados:
+    df_filtrado = df_filtrado[df_filtrado["group"].astype(str).isin(grupos_seleccionados)].copy()
 
 
 # -------------------------------
