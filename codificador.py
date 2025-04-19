@@ -169,20 +169,21 @@ st.markdown("""
 <div style="background-color: #fff0f6; padding: 20px; border-radius: 12px; border: 2px solid #ffb6c1;">
     <h2 style="text-align: center; color: #e75480;">🎀 Bienvenida Dra. Javiera Saavedra Nazer 🎀</h2>
 
-    <p style="font-size: 16px;">
-    Soy su asistente digital, el <strong>Codificator 3002 🤖</strong> y estoy a <strong>su servicio<strong>.
+    <p style="font-size: 16px; text-align: center;">
+    Soy <strong>Codificator 3002 🤖</strong>, su asistente digital.
     </p>
 
     <ul style="font-size: 15px;">
-        <li>🔍 Utilice la <strong>barra lateral</strong> para filtrar las entradas por <em>fuente</em> y/o <em>grupo</em>.</li>
-        <li>🧠 También puede ingresar uno o varios <strong>términos de búsqueda</strong> usando "AND" o "OR" para encontrar resultados precisos.</li>
+        <li>🔍 Use la <strong>barra lateral</strong> para filtrar por fuente o grupo.</li>
+        <li>🧠 Ingrese palabras clave para buscar entradas específicas.</li>
     </ul>
 
-    <p style="font-size: 15px;">
-    📎 LinkedIn de la Dra. Javiera Saavedra Nazer: <a href="https://www.linkedin.com/in/javiera-saavedra-nazer-md-faadv-582a7448/" target="_blank"><strong>LinkedIn de la Dra. Javiera Saavedra Nazer</strong></a>
+    <p style="font-size: 14px; text-align: center;">
+    📎 <a href="https://www.linkedin.com/in/javiera-saavedra-nazer-md-faadv-582a7448/" target="_blank"><strong>Ver LinkedIn</strong></a>
     </p>
 </div>
 """, unsafe_allow_html=True)
+
 
 
 
