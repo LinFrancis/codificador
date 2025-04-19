@@ -190,7 +190,7 @@ if selected_rows:
                     st.success("✅ {} fila(s) eliminadas correctamente:\n{}".format(
                         len(selected_rows), "\n".join(deleted_refs)
                     ))
-                    st.experimental_rerun()
+                    st.rerun()
                 except Exception as e:
                     st.error("❌ Error al eliminar filas:")
                     st.exception(e)
