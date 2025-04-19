@@ -238,49 +238,39 @@ with tabs[1]:
     if group_filter != "Todas":
         filtered_df = filtered_df[filtered_df["group"] == group_filter]
 
+    # 👉 Let the user edit the table
     edited_df = st.data_editor(
         filtered_df,
         num_rows="dynamic",
         use_container_width=True,
         key="editor_glosary"
     )
-
-    # Confirm edits
-    if st.button("📝 Confirmar edición"):
-        st.session_state["edited_data_ready"] = edited_df.copy()
-        st.session_state["confirm_ready"] = True
-        st.success("✅ Edición confirmada. Ahora puedes guardar los cambios.")
-
-    # Final Save
-    if st.session_state.get("confirm_ready", False):
-        if st.button("💾 Guardar definitivamente"):
-            try:
-                full_df = read_data()
-                edited_data = st.session_state["edited_data_ready"]
-                for _, row in edited_data.iterrows():
-                    idx = int(row["row_id"])
-                    full_df.loc[idx, ["source", "group", "code", "text"]] = row[["source", "group", "code", "text"]]
-                save_data(full_df)
-                st.success("✅ Cambios guardados exitosamente en Google Sheets.")
-                st.session_state.pop("confirm_ready", None)
-                st.session_state.pop("edited_data_ready", None)
-                st.rerun()
-            except Exception as e:
-                st.error("❌ Error al guardar los cambios:")
-                st.exception(e)
-
-with tabs[2]:
-    st.markdown("### 🗑️ Seleccionar filas para eliminar")
-
-    df_glosary = read_data()  # Make sure you're using fresh data with row_id
-    row_ids = df_glosary["row_id"]
-
-    selected_rows = st.multiselect(
-    "Selecciona las filas a eliminar:",
-    row_ids,
-    format_func=lambda i: f"{i}: {df_glosary.loc[i, 'code']} | {df_glosary.loc[i, 'text'][:40]}...",
-    key="delete_multiselect"  # ✅ unique key avoids StreamlitDuplicateElementId
-)
+    
+    # 👉 Save button
+    if st.button("💾 Guardar cambios"):
+        try:
+            full_df = read_data()  # Reload to make sure index is fresh
+            for i, row in edited_df.iterrows():
+                idx = row["row_id"]  # Make sure row_id exists!
+                full_df.loc[idx, ["source", "group", "code", "text"]] = row[["source", "group", "code", "text"]]
+            save_data(full_df)
+            st.success("✅ Cambios guardados correctamente.")
+            st.rerun()
+        except Exception as e:
+            st.error("❌ Error al guardar los cambios:")
+            st.exception(e)
+    with tabs[2]:
+        st.markdown("### 🗑️ Seleccionar filas para eliminar")
+    
+        df_glosary = read_data()  # Make sure you're using fresh data with row_id
+        row_ids = df_glosary["row_id"]
+    
+        selected_rows = st.multiselect(
+        "Selecciona las filas a eliminar:",
+        row_ids,
+        format_func=lambda i: f"{i}: {df_glosary.loc[i, 'code']} | {df_glosary.loc[i, 'text'][:40]}...",
+        key="delete_multiselect"  # ✅ unique key avoids StreamlitDuplicateElementId
+    )
 
     if selected_rows:
         col1, col2 = st.columns([1, 3])
