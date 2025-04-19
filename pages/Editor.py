@@ -96,13 +96,15 @@ with st.form("form_final_entry", clear_on_submit=True):
                 updated_df = pd.concat([current_df, pd.DataFrame([new_row])], ignore_index=True)
                 save_data(updated_df)
                 st.success("✅ Nueva entrada agregada correctamente.")
-                st.info(f"**Fuente:** {new_row['source']}
+                st.info(f"""
+**Fuente:** {new_row['source']}
 
 **Grupo:** {new_row['group']}
 
 **Código:** {new_row['code']}
 
-**Texto:** {new_row['text']}")
+**Texto:** {new_row['text']}
+""")
             except Exception as e:
                 st.error("❌ Error al agregar la entrada:")
                 st.exception(e)
