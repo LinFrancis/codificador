@@ -265,20 +265,28 @@ with tabs[1]:
 
 
     
+def safe_format_row(i):
+    match = df_glosary[df_glosary["row_id"] == i]
+    if not match.empty:
+        code = match.iloc[0]["code"]
+        text = match.iloc[0]["text"]
+        return f"{i}: {code} | {text[:40]}..."
+    else:
+        return f"{i}: (entrada no encontrada)"
+
 with tabs[2]:
     st.markdown("### 🗑️ Seleccionar filas para eliminar")
 
-    df_glosary = read_data()  # Make sure you're using fresh data with row_id
+    df_glosary = read_data()
     row_ids = df_glosary["row_id"]
 
     selected_rows = st.multiselect(
-    "Selecciona las filas a eliminar:",
-    row_ids,
-    format_func=lambda i: f"{i}: {df_glosary[df_glosary['row_id'] == i]['code'].values[0]} | {df_glosary[df_glosary['row_id'] == i]['text'].values[0][:40]}...",
-    key="delete_multiselect"
-)
+        "Selecciona las filas a eliminar:",
+        row_ids,
+        format_func=safe_format_row,
+        key="delete_multiselect"
+    )
 
-       
     if selected_rows:
         col1, col2 = st.columns([1, 3])
         with col1:
@@ -286,16 +294,20 @@ with tabs[2]:
         with col2:
             if confirm and st.button("🗑️ Eliminar seleccionadas"):
                 try:
-                    deleted_refs = [
-                        f"{i}: {df_glosary.loc[i, 'code']} | {df_glosary.loc[i, 'text'][:40]}..."
-                        for i in selected_rows
-                    ]
-                    updated_df = df_glosary.drop(index=selected_rows)
+                    deleted_refs = []
+                    for i in selected_rows:
+                        match = df_glosary[df_glosary["row_id"] == i]
+                        if not match.empty:
+                            deleted_refs.append(f"{i}: {match.iloc[0]['code']} | {match.iloc[0]['text'][:40]}...")
+
+                    updated_df = df_glosary[~df_glosary["row_id"].isin(selected_rows)]
                     save_data(updated_df)
+
                     st.success("✅ {} fila(s) eliminadas correctamente:\n{}".format(
-                        len(selected_rows), "\n".join(deleted_refs)
+                        len(deleted_refs), "\n".join(deleted_refs)
                     ))
                     st.rerun()
+
                 except Exception as e:
                     st.error("❌ Error al eliminar filas:")
                     st.exception(e)
