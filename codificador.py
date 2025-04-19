@@ -162,6 +162,8 @@ st.markdown(
     unsafe_allow_html=True
 )
 
+
+
 st.markdown("""
 <style>
 .center-wrapper {
@@ -237,9 +239,6 @@ st.markdown("""
   </div>
 </div>
 """, unsafe_allow_html=True)
-
-
-
 # Inicializar el historial de búsqueda en la sesión
 if "search_history" not in st.session_state:
     st.session_state["search_history"] = []
