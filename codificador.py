@@ -4,6 +4,47 @@ import datetime
 import csv
 import os
 from rapidfuzz import fuzz  # Asegúrate de tener instalado rapidfuzz
+import gspread
+from oauth2client.service_account import ServiceAccountCredentials
+import streamlit as st
+import pandas as pd
+
+# =========================
+# CONNECT TO GOOGLE SHEET
+# =========================
+def connect_to_gsheet(spreadsheet_name, sheet_name):
+    scope = [
+        "https://spreadsheets.google.com/feeds",
+        "https://www.googleapis.com/auth/spreadsheets",
+        "https://www.googleapis.com/auth/drive.file",
+        "https://www.googleapis.com/auth/drive"
+    ]
+
+    creds_dict = st.secrets["gsheets"]
+    credentials = ServiceAccountCredentials.from_json_keyfile_dict(dict(creds_dict), scope)
+    client = gspread.authorize(credentials)
+    spreadsheet = client.open(spreadsheet_name)
+    return spreadsheet.worksheet(sheet_name)
+
+# Sheet name variables
+SPREADSHEET_NAME = 'DIAGNOSIS_DATABASE'
+SHEET_NAME = 'DIAGNOSIS'
+
+# Connect to the Sheet
+sheet_by_name = connect_to_gsheet(SPREADSHEET_NAME, SHEET_NAME)
+
+
+# =========================
+# SHEET FUNCTIONS
+# =========================
+def read_data():
+    data = sheet_by_name.get_all_records()  
+    return pd.DataFrame(data)
+
+df_glosary = read_data()
+
+
+
 
 st.set_page_config(
     page_title="Codificator 3001 - Dra. Javiera Saavedra Nazer",
@@ -104,16 +145,7 @@ if "search_history" not in st.session_state:
 if "search_query_default" not in st.session_state:
     st.session_state["search_query_default"] = ""
 
-# Cargar datos del glosario
-@st.cache_data
-def load_glosary():
-    file_path_glosary = "DIAGNOSIS TEXT_full.xlsx"  # Asegúrate que el nombre y la ruta sean exactos
-    if not os.path.exists(file_path_glosary):
-        st.error(f"El archivo '{file_path_glosary}' no se encontró. Asegúrate de que esté subido en el repositorio.")
-        st.stop()
-    return pd.read_excel(file_path_glosary)
 
-df_glosary = load_glosary()
 
 # -------------------------------
 # Barra lateral: Opciones de filtrado
