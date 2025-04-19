@@ -57,22 +57,30 @@ df_glosary = read_data()
 source_options = sorted(df_glosary["source"].dropna().unique()) + ["Otro"]
 group_options = sorted(df_glosary["group"].dropna().unique()) + ["Otro"]
 
-with st.form("add_simple_entry_form", clear_on_submit=True):
+# === FORMULARIO DE FUENTE ===
+with st.form("form_fuente"):
     selected_source = st.selectbox("Selecciona fuente:", source_options)
+    new_source = ""
+    if selected_source == "Otro":
+        new_source = st.text_input("Escribe nueva fuente:", key="new_source")
+    submitted_fuente = st.form_submit_button("Confirmar fuente")
+
+# === FORMULARIO DE GRUPO ===
+with st.form("form_grupo"):
     selected_group = st.selectbox("Selecciona grupo:", group_options)
+    new_group = ""
+    if selected_group == "Otro":
+        new_group = st.text_input("Escribe nuevo grupo:", key="new_group")
+    submitted_grupo = st.form_submit_button("Confirmar grupo")
 
-    show_new_source = selected_source == "Otro"
-    show_new_group = selected_group == "Otro"
-
-    new_source = st.text_input("Escribe nueva fuente:", key="new_source") if show_new_source else ""
-    new_group = st.text_input("Escribe nuevo grupo:", key="new_group") if show_new_group else ""
-
+# === FORMULARIO FINAL ===
+with st.form("form_final_entry", clear_on_submit=True):
     new_code = st.text_input("Código")
     new_text = st.text_area("Texto")
 
     if st.form_submit_button("Agregar entrada"):
-        final_source = new_source.strip() if show_new_source else selected_source.strip()
-        final_group = new_group.strip() if show_new_group else selected_group.strip()
+        final_source = new_source.strip() if selected_source == "Otro" else selected_source.strip()
+        final_group = new_group.strip() if selected_group == "Otro" else selected_group.strip()
 
         if not new_text.strip() or not final_source or not final_group:
             st.warning("⚠️ Los campos 'Texto', 'Fuente' y 'Grupo' son obligatorios.")
