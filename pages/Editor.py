@@ -10,6 +10,22 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
+# Set your one password
+PASSWORD = "hellokitty"
+
+# Ask for password
+st.title("🔐 Acceso restringido")
+password = st.text_input("Ingresa la contraseña:", type="password")
+
+# Block the app if password is wrong or empty
+if password != PASSWORD:
+    st.warning("Contraseña incorrecta o pendiente.")
+    st.stop()
+
+# ✅ If password is correct, show the app
+st.success("Acceso concedido")
+
+
 # ✅ CONEXIÓN A GOOGLE SHEET
 def connect_to_gsheet(spreadsheet_name, sheet_name):
     scope = [
