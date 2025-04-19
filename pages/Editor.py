@@ -96,9 +96,19 @@ with st.form("form_final_entry", clear_on_submit=True):
                 updated_df = pd.concat([current_df, pd.DataFrame([new_row])], ignore_index=True)
                 save_data(updated_df)
                 st.success("✅ Nueva entrada agregada correctamente.")
+                st.info(f"**Fuente:** {new_row['source']}
+
+**Grupo:** {new_row['group']}
+
+**Código:** {new_row['code']}
+
+**Texto:** {new_row['text']}")
             except Exception as e:
                 st.error("❌ Error al agregar la entrada:")
                 st.exception(e)
+
+    if st.form_submit_button("🧹 Limpiar formulario"):
+        st.experimental_rerun()
 
 st.divider()
 
@@ -129,3 +139,4 @@ if selected_rows:
                 st.exception(e)
 else:
     st.write("No se han seleccionado filas para eliminar.")
+
