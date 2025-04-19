@@ -6,40 +6,6 @@ import os
 from rapidfuzz import fuzz
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
-import streamlit_authenticator as stauth
-
-# Hashed password for "hellokitty"
-hashed_password = '$2b$12$8I8Acob9nmg60mtZk8.Q.OlZxGPwUZzR1DQ/30mO6kZ2nRKaKHcO2'
-
-# Only one user
-credentials = {
-    "usernames": {
-        "admin": {
-            "name": "Admin",
-            "password": hashed_password,
-        }
-    }
-}
-
-authenticator = stauth.Authenticate(
-    credentials,
-    cookie_name="codificador_login",
-    key="some_key",
-    cookie_expiry_days=1
-)
-
-name, auth_status, username = authenticator.login("Iniciar sesión", "main")
-
-if auth_status is False:
-    st.error("Contraseña incorrecta.")
-    st.stop()
-elif auth_status is None:
-    st.warning("Ingresa la contraseña.")
-    st.stop()
-
-authenticator.logout("Cerrar sesión", "sidebar")
-
-
 
 st.set_page_config(
     page_title="Codificator 3001 - Dra. Javiera Saavedra Nazer",
