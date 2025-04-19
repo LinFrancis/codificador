@@ -31,7 +31,7 @@ if st.session_state["authenticated"]:
 
 # Login screen
 if not st.session_state["authenticated"]:
-    st.markdown("<h1 style='text-align: center;'>🔐 Codificator 3002 – Acceso restringido</h1>", unsafe_allow_html=True)
+    st.image("image/logo_codificator.png", width=200)
     st.markdown("""
     ### Estimada Dra. Javiera Saavedra Nazer  
     
@@ -40,17 +40,17 @@ if not st.session_state["authenticated"]:
     Por favor, introduzca la contraseña correspondiente para continuar.  
     Si requiere asistencia o no recuerda la clave, comuníquese con su equipo de soporte.
     """)
-
-    password = st.text_input("Contraseña de acceso:", type="password")
+    password = st.text_input("Contraseña:", type="password")
     if password == PASSWORD:
         st.session_state["authenticated"] = True
         st.rerun()
     elif password:
-        st.error("Contraseña incorrecta. Intente nuevamente.")
+        st.error("Contraseña incorrecta.")
         st.stop()
     else:
         st.stop()
 
+    
 
 
 # Layout in columns (image on left, welcome box on right)
