@@ -56,7 +56,7 @@ if not st.session_state["authenticated"]:
     st.image("image/logo_codificator_4.png", width=300)
     st.markdown("""
     ### Bienvenida Dra. Javiera Saavedra Nazer  
-    Soy el **Codificator 3002 🤖** y estoy a su servicio.
+    Soy el **Codificator 3002 🤖** y estoy a Su servicio.
 
     Para continuar, por favor ingrese la contraseña en el campo a continuación.  
     Si tiene problemas de acceso, contacte a su encargado de sistemas.
