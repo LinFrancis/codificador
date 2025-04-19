@@ -11,7 +11,7 @@ from oauth2client.service_account import ServiceAccountCredentials
 st.set_page_config(
     page_title="Codificator 3001 - Dra. Javiera Saavedra Nazer",
     layout="wide",
-    initial_sidebar_state="expanded"
+    initial_sidebar_state="expanded")
 
 def connect_to_gsheet(spreadsheet_name, sheet_name):
     scope = [
