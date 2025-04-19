@@ -309,7 +309,7 @@ if terminos_busqueda:
 else:
     df_filtered_fuzzy = df_filtrado
 
-st.subheader("Resultados de búsqueda del glosario")
+st.subheader("Resultados de búsqueda")
 
 # Mostrar resultados con términos resaltados y código en mayúsculas
 if not fuentes_seleccionadas and not terminos_busqueda:
