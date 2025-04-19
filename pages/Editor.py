@@ -133,15 +133,14 @@ st.divider()
 
 
 # =========================
-# 📊 VISUALIZAR Y ELIMINAR BASE DE DATOS
+# 📊 VISUALIZAR, EDITAR Y ELIMINAR BASE DE DATOS
 # =========================
-st.subheader("📊 Ver y eliminar entradas del glosario")
+st.subheader("📊 Ver, editar y eliminar entradas del glosario")
 df_glosary = read_data()
 df_glosary["_index"] = df_glosary.index
 
 with st.expander("📋 Mostrar y gestionar base de datos"):
     st.markdown("### 🔍 Vista previa del glosario")
-
     source_filter = st.selectbox("Filtrar por fuente:", ["Todas"] + sorted(df_glosary['source'].dropna().unique().tolist()))
     group_filter = st.selectbox("Filtrar por grupo:", ["Todas"] + sorted(df_glosary['group'].dropna().unique().tolist()))
 
@@ -151,11 +150,21 @@ with st.expander("📋 Mostrar y gestionar base de datos"):
     if group_filter != "Todas":
         filtered_df = filtered_df[filtered_df["group"] == group_filter]
 
-    st.dataframe(
+    edited_df = st.data_editor(
         filtered_df.drop(columns=["_index"]),
+        num_rows="dynamic",
         use_container_width=True,
-        height=400
+        key="editor_glosary"
     )
+
+    if st.button("💾 Guardar cambios en la tabla filtrada"):
+        try:
+            save_data(edited_df)
+            st.success("✅ Cambios guardados exitosamente en Google Sheets.")
+            st.experimental_rerun()
+        except Exception as e:
+            st.error("❌ Error al guardar los cambios:")
+            st.exception(e)
 
     st.markdown("### 🗑️ Seleccionar filas para eliminar")
     selected_rows = st.multiselect(
@@ -174,13 +183,15 @@ with st.expander("📋 Mostrar y gestionar base de datos"):
                     deleted_refs = [f"{i}: {df_glosary.loc[i, 'code']} | {df_glosary.loc[i, 'text'][:40]}..." for i in selected_rows]
                     updated_df = df_glosary.drop(index=selected_rows).reset_index(drop=True)
                     save_data(updated_df)
-                    st.success("✅ {} fila(s) eliminadas correctamente:\n{}".format(
-                        len(selected_rows), '\n'.join(deleted_refs)
-                    ))
+                    st.success("✅ {} fila(s) eliminadas correctamente:
+{}".format(
+                        len(selected_rows), '
+'.join(deleted_refs)))
                     st.experimental_rerun()
                 except Exception as e:
                     st.error("❌ Error al eliminar filas:")
                     st.exception(e)
     else:
         st.write("No se han seleccionado filas para eliminar.")
+
 
