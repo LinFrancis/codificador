@@ -50,6 +50,53 @@ if not st.session_state["authenticated"]:
     else:
         st.stop()
 
+
+# Layout in columns (image on left, welcome box on right)
+col1, col2 = st.columns([1, 3])
+
+with col1:
+    st.image("image/logo_codificator_2.png", width=300)
+
+with col2:
+    st.markdown("""
+    <style>
+    .hello-box {
+        background: linear-gradient(to bottom, #fff6fb, #ffeef7);
+        padding: 24px;
+        border-radius: 18px;
+        border: 2px solid #ffb6d5;
+        box-shadow: 0px 4px 12px rgba(255, 182, 213, 0.3);
+        font-family: 'Segoe UI', sans-serif;
+        color: #a64d79;
+        margin-bottom: 2rem;
+    }
+    .hello-box h2 {
+        color: #ff69b4;
+        font-size: 24px;
+        margin-bottom: 12px;
+        text-align: center;
+    }
+    .hello-box p {
+        font-size: 16px;
+        margin: 8px 0;
+    }
+    .hello-box a {
+        color: #6699cc;
+        text-decoration: none;
+        font-weight: bold;
+    }
+        </style>
+
+    <div class="hello-box">
+        <h2>Bienvenida al Editor de su base de datos Dra. Javiera Saavedra Nazer</h2>
+        <p>📝<strong>"Aquí"</strong> puede agregar, editar o eliminar información de la base de datos. Los cambios se actualizan en tiempo real.</p>
+    </div>
+    """, unsafe_allow_html=True)
+
+
+
+
+
 # ✅ CONEXIÓN A GOOGLE SHEET
 def connect_to_gsheet(spreadsheet_name, sheet_name):
     scope = [
