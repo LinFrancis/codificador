@@ -33,7 +33,7 @@ def read_data():
     return pd.DataFrame(sheet_by_name.get_all_records())
 
 def save_data(df):
-    expected_columns = ["source", "text", "group", "code", "Link"]
+    expected_columns = ["source", "group", "code", "text"]
     for col in expected_columns:
         if col not in df.columns:
             df[col] = ""
@@ -79,31 +79,29 @@ existing_groups = sorted(df_glosary["group"].dropna().astype(str).unique())
 
 with st.form("add_entry_form", clear_on_submit=True):
     use_custom_source = st.checkbox("✏️ Escribir nueva fuente")
-    new_source_input = st.text_input("Nueva fuente") if use_custom_source or not existing_sources else ""
-    selected_source = st.selectbox("Fuente existente:", existing_sources, key="select_source") if not use_custom_source and existing_sources else ""
+    new_source_input = st.text_input("Nueva fuente") if use_custom_source else ""
+    selected_source = st.selectbox("Fuente existente:", existing_sources, key="select_source") if not use_custom_source else ""
 
     new_text = st.text_area("Texto")
 
     use_custom_group = st.checkbox("✏️ Escribir nuevo grupo")
-    new_group_input = st.text_input("Nuevo grupo") if use_custom_group or not existing_groups else ""
-    selected_group = st.selectbox("Grupo existente:", existing_groups, key="select_group") if not use_custom_group and existing_groups else ""
+    new_group_input = st.text_input("Nuevo grupo") if use_custom_group else ""
+    selected_group = st.selectbox("Grupo existente:", existing_groups, key="select_group") if not use_custom_group else ""
 
     new_code = st.text_input("Código")
-    new_link = st.text_input("Link (opcional)")
 
     if st.form_submit_button("➕ Agregar entrada"):
-        source_val = new_source_input.strip() if use_custom_source or not existing_sources else selected_source.strip()
-        group_val = new_group_input.strip() if use_custom_group or not existing_groups else selected_group.strip()
+        source_val = new_source_input.strip() if use_custom_source else selected_source.strip()
+        group_val = new_group_input.strip() if use_custom_group else selected_group.strip()
 
         if not new_text.strip() or not source_val or not group_val:
             st.warning("⚠️ Los campos 'Texto', 'Fuente' y 'Grupo' son obligatorios.")
         else:
             new_row = {
                 "source": source_val,
-                "text": new_text.strip(),
                 "group": group_val,
                 "code": new_code.strip(),
-                "Link": new_link.strip()
+                "text": new_text.strip()
             }
             try:
                 current_df = read_data()
