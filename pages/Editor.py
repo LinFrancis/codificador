@@ -139,4 +139,3 @@ if selected_rows:
                 st.exception(e)
 else:
     st.write("No se han seleccionado filas para eliminar.")
-
