@@ -8,12 +8,12 @@ import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 import streamlit_authenticator as stauth
 
-# Load secrets
+# Load credentials from secrets
 names = st.secrets.auth.names
 usernames = st.secrets.auth.usernames
 passwords = st.secrets.auth.passwords
 
-# Structure the credentials
+# Format into expected structure
 credentials = {
     "usernames": {
         usernames[0]: {
@@ -23,16 +23,19 @@ credentials = {
     }
 }
 
-# Initialize authenticator
+# Set up the authenticator
 authenticator = stauth.Authenticate(
-    credentials,
+    credentials=credentials,
     cookie_name="codificador_login",
     key="codificador_key",
     cookie_expiry_days=1
 )
 
-# ✅ This is the correct login method — no kwargs!
-name, authentication_status, username = authenticator.login("Login", "main")
+# ✅ Correct login syntax using keyword arguments
+name, authentication_status, username = authenticator.login(
+    location="main",
+    fields={"Form name": "🔐 Iniciar sesión"}
+)
 
 # Handle login logic
 if authentication_status is False:
@@ -42,7 +45,7 @@ elif authentication_status is None:
     st.warning("Por favor ingresa tus credenciales.")
     st.stop()
 
-# Optional: logout button
+# Optional logout
 authenticator.logout("Cerrar sesión", "sidebar")
 
 
