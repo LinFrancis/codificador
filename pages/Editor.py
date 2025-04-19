@@ -55,7 +55,7 @@ if not st.session_state["authenticated"]:
 col1, col2 = st.columns([1, 3])
 
 with col1:
-    st.image("image/logo_codificator.png", width=300)
+    st.image("image/logo_codificator.png", width=200)
 
 with col2:
     st.markdown("""
