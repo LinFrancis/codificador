@@ -223,6 +223,51 @@ with tabs[0]:
 
 # st.divider()
 
+with tabs[1]:
+    # =========================
+    # 📊 VISUALIZAR, EDITAR Y ELIMINAR BASE DE DATOS
+    # =========================
+    st.subheader("📊 Ver, editar y eliminar entradas")
+
+    # Load and prepare data
+    df_glosary = read_data()
+
+    # Filters
+    source_filter = st.selectbox("Filtrar por fuente:", ["Todas"] + sorted(df_glosary['source'].dropna().unique().tolist()))
+    group_filter = st.selectbox("Filtrar por grupo:", ["Todas"] + sorted(df_glosary['group'].dropna().unique().tolist()))
+
+    filtered_df = df_glosary.copy()
+    if source_filter != "Todas":
+        filtered_df = filtered_df[filtered_df["source"] == source_filter]
+    if group_filter != "Todas":
+        filtered_df = filtered_df[filtered_df["group"] == group_filter]
+
+    # Display editable table
+    edited_df = st.data_editor(
+        filtered_df,
+        num_rows="dynamic",
+        use_container_width=True,
+        key="editor_glosary"
+    )
+
+    # Save changes
+    if st.button("💾 Guardar cambios en la tabla filtrada"):
+        try:
+            full_df = read_data()
+
+            for _, row in edited_df.iterrows():
+                idx = int(row["row_id"])
+                full_df.loc[idx, ["source", "group", "code", "text"]] = row[["source", "group", "code", "text"]]
+
+            save_data(full_df)
+            st.success("✅ Cambios guardados exitosamente en Google Sheets.")
+            st.rerun()
+
+        except Exception as e:
+            st.error("❌ Error al guardar los cambios:")
+            st.exception(e)
+
+
 
 
 with tabs[2]:
