@@ -199,7 +199,7 @@ with col2:
         </style>
 
     <div class="hello-box">
-        <h2>🎀 Bienvenida Dra. Javiera Saavedra Nazer 🎀</h2>
+        <h2>Bienvenida Dra. Javiera Saavedra Nazer</h2>
         <p>🔍 Use la <strong>barra lateral</strong> para filtrar por fuente o grupo e ingresar palabras clave.</p>
         <p>📝 En el menú <strong>"Editor"</strong> puede agregar, editar o eliminar información de la base de datos. Los cambios se actualizan en tiempo real.</p>
     </div>
