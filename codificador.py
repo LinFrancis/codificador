@@ -11,7 +11,7 @@ from PIL import Image
 
 # === Set page config early ===
 st.set_page_config(
-    page_title="Codificator 3001 - Dra. Javiera Saavedra Nazer",
+    page_title="Codificator 3002 - Dra. Javiera Saavedra Nazer",
     layout="wide",
     initial_sidebar_state="expanded"
 )
@@ -41,7 +41,7 @@ if not st.session_state["authenticated"]:
     st.markdown("<h1 style='text-align: center;'>🔐 Codificator 3001</h1>", unsafe_allow_html=True)
     st.markdown("""
     ### Bienvenida Dra. Javiera Saavedra Nazer  
-    Soy el **Codificator 3001 🤖** y estoy a su servicio.
+    Soy el **Codificator 3002 🤖** y estoy a su servicio.
 
     Para continuar, por favor ingrese la contraseña en el campo a continuación.  
     Si tiene problemas de acceso, contacte al administrador.
