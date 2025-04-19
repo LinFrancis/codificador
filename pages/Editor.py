@@ -59,7 +59,7 @@ group_options = sorted(df_glosary["group"].dropna().unique()) + ["Otro"]
 
 # === FORMULARIO DE FUENTE ===
 with st.form("form_fuente"):
-    selected_source = st.selectbox("Selecciona fuente:", source_options)
+    selected_source = st.selectbox("Selecciona fuente:", [""] + source_options)
     new_source = ""
     if selected_source == "Otro":
         new_source = st.text_input("Escribe nueva fuente:", key="new_source")
@@ -67,7 +67,7 @@ with st.form("form_fuente"):
 
 # === FORMULARIO DE GRUPO ===
 with st.form("form_grupo"):
-    selected_group = st.selectbox("Selecciona grupo:", group_options)
+    selected_group = st.selectbox("Selecciona grupo:", [""] + group_options)
     new_group = ""
     if selected_group == "Otro":
         new_group = st.text_input("Escribe nuevo grupo:", key="new_group")
@@ -127,5 +127,8 @@ if selected_rows:
             except Exception as e:
                 st.error("❌ Error al eliminar filas:")
                 st.exception(e)
+else:
+    st.write("No se han seleccionado filas para eliminar.")
+
 else:
     st.write("No se han seleccionado filas para eliminar.")
