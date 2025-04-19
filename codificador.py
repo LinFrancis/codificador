@@ -13,25 +13,41 @@ st.set_page_config(
     initial_sidebar_state="expanded")
 
 # ====================
-# 🔐 SIMPLE PASSWORD PROTECTION with session memory
+# 🔐 PASSWORD PROTECTION with session + logout
 # ====================
 PASSWORD = "hellokitty"
 
-# Show input only if not authenticated yet
+# Initialize login state
 if "authenticated" not in st.session_state:
     st.session_state["authenticated"] = False
 
+# Logout button
+if st.session_state["authenticated"]:
+    with st.sidebar:
+        if st.button("🔓 Cerrar sesión"):
+            st.session_state["authenticated"] = False
+            st.experimental_rerun()
+
+# Login screen
 if not st.session_state["authenticated"]:
-    st.title("🔐 Acceso restringido")
-    password = st.text_input("Ingresa la contraseña:", type="password")
+    st.markdown("<h1 style='text-align: center;'>🔐 Codificator 3001</h1>", unsafe_allow_html=True)
+    st.markdown("""
+    ### Bienvenida Dra. Javiera Saavedra Nazer  
+    Soy el **Codificator 3001 🤖** y estoy a su servicio.
+
+    Para continuar, por favor ingrese la contraseña en el campo a continuación.  
+    Si tiene problemas de acceso, contacte al administrador.
+    """)
+    password = st.text_input("Contraseña:", type="password")
     if password == PASSWORD:
         st.session_state["authenticated"] = True
-        st.rerun()
+        st.experimental_rerun()
     elif password:
         st.error("Contraseña incorrecta.")
         st.stop()
     else:
         st.stop()
+
 
 def connect_to_gsheet(spreadsheet_name, sheet_name):
     scope = [
