@@ -9,14 +9,6 @@ from oauth2client.service_account import ServiceAccountCredentials
 import streamlit as st
 import pandas as pd
 
-client = gspread.authorize(credentials)
-sheet_titles = [s.title for s in client.openall()]
-st.write("✅ Sheets your app can access:")
-st.write(sheet_titles)
-
-# =========================
-# CONNECT TO GOOGLE SHEET
-# =========================
 def connect_to_gsheet(spreadsheet_name, sheet_name):
     scope = [
         "https://spreadsheets.google.com/feeds",
@@ -28,8 +20,18 @@ def connect_to_gsheet(spreadsheet_name, sheet_name):
     creds_dict = st.secrets["gsheets"]
     credentials = ServiceAccountCredentials.from_json_keyfile_dict(dict(creds_dict), scope)
     client = gspread.authorize(credentials)
+
+    # ✅ DEBUG: Print all accessible sheet titles
+    try:
+        sheet_titles = [s.title for s in client.openall()]
+        st.success("✅ Sheets your app can access:")
+        st.write(sheet_titles)
+    except Exception as e:
+        st.error("❌ Could not list spreadsheets:")
+        st.exception(e)
+
     spreadsheet = client.open(spreadsheet_name)
-    return spreadsheet.worksheet(sheet_name)
+    return spreadsheet.worksheet(sheet_name)_name)
 
 # Sheet name variables
 SPREADSHEET_NAME = 'DIAGNOSIS_DATABASE'
