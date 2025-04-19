@@ -3,11 +3,15 @@ import pandas as pd
 import datetime
 import csv
 import os
-from rapidfuzz import fuzz  # Asegúrate de tener instalado rapidfuzz
+from rapidfuzz import fuzz
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
-import streamlit as st
-import pandas as pd
+
+# ✅ FIRST Streamlit command
+st.set_page_config(
+    page_title="Codificator 3001 - Dra. Javiera Saavedra Nazer",
+    layout="wide",
+    initial_sidebar_state="expanded"
 
 def connect_to_gsheet(spreadsheet_name, sheet_name):
     scope = [
@@ -54,11 +58,7 @@ df_glosary = read_data()
 
 
 
-st.set_page_config(
-    page_title="Codificator 3001 - Dra. Javiera Saavedra Nazer",
-    layout="wide",
-    initial_sidebar_state="expanded"
-)
+
 
 # Cargar fuente Montserrat para un diseño moderno
 st.markdown('<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">', unsafe_allow_html=True)
