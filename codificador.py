@@ -7,6 +7,13 @@ from rapidfuzz import fuzz
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 
+# Set your one password
+PASSWORD = "hellokitty"
+
+# Ask for password
+st.title("🔐 Acceso restringido")
+password = st.text_input("Ingresa la contraseña:", type="password")
+
 st.set_page_config(
     page_title="Codificator 3001 - Dra. Javiera Saavedra Nazer",
     layout="wide",
