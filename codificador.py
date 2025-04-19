@@ -162,22 +162,30 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-# Título y descripción (con contenedor de degradado)
+
+st.image("image/logo_codificator.png", width=220)
+
 st.markdown("""
-<div class="title-container">
-    <h1 class="title-text">Codificator 3001</h1>
+<div style="background-color: #fff0f6; padding: 20px; border-radius: 12px; border: 2px solid #ffb6c1;">
+    <h2 style="text-align: center; color: #e75480;">🎀 Bienvenida Dra. Javiera Saavedra Nazer 🎀</h2>
+
+    <p style="font-size: 16px;">
+    Soy su asistente digital, el <strong>Codificator 3002 🤖</strong> y estoy a <strong>su servicio<strong>.
+    </p>
+
+    <ul style="font-size: 15px;">
+        <li>🔍 Utilice la <strong>barra lateral</strong> para filtrar las entradas por <em>fuente</em> y/o <em>grupo</em>.</li>
+        <li>🧠 También puede ingresar uno o varios <strong>términos de búsqueda</strong> usando "AND" o "OR" para encontrar resultados precisos.</li>
+    </ul>
+
+    <p style="font-size: 15px;">
+    📎 LinkedIn de la Dra. Javiera Saavedra Nazer: <a href="https://www.linkedin.com/in/javiera-saavedra-nazer-md-faadv-582a7448/" target="_blank"><strong>LinkedIn de la Dra. Javiera Saavedra Nazer</strong></a>
+    </p>
 </div>
 """, unsafe_allow_html=True)
 
-st.markdown("""
-**Bienvenida Dra. Javiera Saavedra Nazer**   
-Soy el **Codificator 3001 🤖** y estoy a **su servicio**.
 
-🔍 Utilice la **barra lateral** para filtrar las entradas por **fuente** y/o **grupo** mediante los menús desplegables.  
-🧠 También puede usar el campo de **búsqueda avanzada** a continuación para ingresar uno o varios términos (use `"AND"` o `"OR"`) y encontrar rápidamente textos o títulos que los contengan.
 
-📎 [**LinkedIn de la Dra. Javiera Saavedra Nazer**](https://www.linkedin.com/in/javiera-saavedra-nazer-md-faadv-582a7448/)
-""")
 
 # Inicializar el historial de búsqueda en la sesión
 if "search_history" not in st.session_state:
