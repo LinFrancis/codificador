@@ -13,7 +13,6 @@ names = st.secrets.auth.names
 usernames = st.secrets.auth.usernames
 passwords = st.secrets.auth.passwords
 
-# Format into expected structure
 credentials = {
     "usernames": {
         usernames[0]: {
@@ -23,21 +22,17 @@ credentials = {
     }
 }
 
-# Set up the authenticator
+# Initialize authenticator
 authenticator = stauth.Authenticate(
-    credentials=credentials,
+    credentials,
     cookie_name="codificador_login",
     key="codificador_key",
     cookie_expiry_days=1
 )
 
-# ✅ Correct login syntax using keyword arguments
-name, authentication_status, username = authenticator.login(
-    location="main",
-    fields={"Form name": "🔐 Iniciar sesión"}
-)
+# ✅ CORRECT syntax for version 0.2.3
+name, authentication_status, username = authenticator.login("Iniciar sesión", "main")
 
-# Handle login logic
 if authentication_status is False:
     st.error("Usuario o contraseña incorrecta.")
     st.stop()
@@ -45,9 +40,7 @@ elif authentication_status is None:
     st.warning("Por favor ingresa tus credenciales.")
     st.stop()
 
-# Optional logout
 authenticator.logout("Cerrar sesión", "sidebar")
-
 
 st.set_page_config(
     page_title="Codificator 3001 - Dra. Javiera Saavedra Nazer",
