@@ -16,20 +16,10 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# === Show logo at the very top of the sidebar ===
-def show_sidebar_logo():
-    with st.sidebar:
-        st.markdown(
-            """
-            <div style="background-color: white; padding: 10px; border-radius: 12px; text-align: center;">
-            """,
-            unsafe_allow_html=True
-        )
-        st.image("image/logo_codificator.png", width=180)
-        st.markdown("</div>", unsafe_allow_html=True)
+st.logo("image/logo_codificator.png", *, size="medium", link=None, icon_image=None)
 
-# CALL THIS BEFORE anything else that adds content to the sidebar
-show_sidebar_logo()
+
+
 
 # ====================
 # 🔐 PASSWORD PROTECTION with session + logout
