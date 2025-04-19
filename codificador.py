@@ -163,11 +163,17 @@ st.markdown(
 )
 
 
-st.image("image/logo_codificator.png", width=200)
-
 st.markdown("""
 <style>
-.hello-box {
+.center-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+.container {
+    display: flex;
+    align-items: center;
     background: linear-gradient(to bottom, #fff6fb, #ffeef7);
     padding: 24px;
     border-radius: 18px;
@@ -175,30 +181,68 @@ st.markdown("""
     box-shadow: 0px 4px 12px rgba(255, 182, 213, 0.3);
     font-family: 'Segoe UI', sans-serif;
     color: #a64d79;
-    margin-bottom: 2rem;
+    gap: 30px;
+    max-width: 900px;
 }
-.hello-box h2 {
+
+.container img {
+    max-width: 200px;
+    border-radius: 12px;
+    animation: sparkle 2.5s ease-in-out infinite;
+}
+
+.hello-text {
+    flex: 1;
+}
+
+.hello-text h2 {
     color: #ff69b4;
     font-size: 24px;
     margin-bottom: 12px;
 }
-.hello-box p {
+
+.hello-text p {
     font-size: 16px;
-    margin: 6px 0;
+    margin: 8px 0;
 }
-.hello-box a {
+
+.hello-text a {
     color: #6699cc;
     text-decoration: none;
     font-weight: bold;
 }
+
+.bot-badge {
+    background-color: #e0f2ff;
+    color: #336699;
+    padding: 6px 12px;
+    border-radius: 12px;
+    font-weight: bold;
+    font-size: 15px;
+    box-shadow: 1px 2px 4px rgba(102,153,204,0.2);
+    border: 1px solid #b3d9ff;
+    display: inline-block;
+    font-family: 'Courier New', monospace;
+}
+
+/* ✨ Sparkle Animation */
+@keyframes sparkle {
+  0%, 100% { transform: scale(1) rotate(0deg); filter: brightness(1); }
+  50% { transform: scale(1.05) rotate(1deg); filter: brightness(1.15); }
+}
 </style>
 
-<div class="hello-box">
-    <h2>🎀 Bienvenida Dra. Javiera Saavedra Nazer 🎀</h2>
-    <p>🌸 Soy <span class="bot-badge">🤖 Codificator 3002</span> y <strong>estoy a su servicio</strong>.</p>
-    <p>🔍 Use la <strong>barra lateral</strong> para filtrar por fuente o grupo e ingrese palabras clave para buscar entradas fácilmente.</p>.</p>
-   
-    <p>📎 <a href="https://www.linkedin.com/in/javiera-saavedra-nazer-md-faadv-582a7448/" target="_blank">Ver LinkedIn</a></p>
+<div class="center-wrapper">
+  <div class="container">
+      <img src="image/logo_codificator.png" alt="Logo Codificator">
+      <div class="hello-text">
+          <h2>🎀 Bienvenida Dra. Javiera Saavedra Nazer 🎀</h2>
+          <p>🌸 Soy <span class="bot-badge">🤖 Codificator 3002</span> y <strong>estoy a su servicio</strong>.</p>
+          <p>🔍 Use la <strong>barra lateral</strong> para filtrar por fuente o grupo e ingresar palabras clave.</p>
+          <p>📝 En el menú <strong>"Editor"</strong> puede agregar, editar o eliminar información de la base de datos. Los cambios se actualizan en tiempo real.</p>
+          <p>📎 <a href="https://www.linkedin.com/in/javiera-saavedra-nazer-md-faadv-582a7448/" target="_blank">Ver LinkedIn</a></p>
+      </div>
+  </div>
 </div>
 """, unsafe_allow_html=True)
 
