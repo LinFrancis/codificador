@@ -6,15 +6,15 @@ import os
 from rapidfuzz import fuzz
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
-
-
 import streamlit_authenticator as stauth
 
-# Load secrets from secrets.toml
+
+# Load credentials from secrets
 names = st.secrets.auth.names
 usernames = st.secrets.auth.usernames
 passwords = st.secrets.auth.passwords
 
+# Set up the credentials structure
 credentials = {
     "usernames": {
         usernames[0]: {
@@ -24,6 +24,7 @@ credentials = {
     }
 }
 
+# Authenticator setup
 authenticator = stauth.Authenticate(
     credentials=credentials,
     cookie_name="codificador_login",
@@ -31,8 +32,13 @@ authenticator = stauth.Authenticate(
     cookie_expiry_days=1
 )
 
-name, authentication_status, username = authenticator.login("Iniciar sesión", "main")
+# ✅ This is the correct login usage
+name, authentication_status, username = authenticator.login(
+    location='main',
+    fields={'Form name': '🔐 Iniciar sesión'}
+)
 
+# Handle login status
 if authentication_status is False:
     st.error("Usuario o contraseña incorrecta.")
     st.stop()
@@ -40,8 +46,8 @@ elif authentication_status is None:
     st.warning("Por favor ingresa tus credenciales.")
     st.stop()
 
+# Logout button (optional)
 authenticator.logout("Cerrar sesión", "sidebar")
-
 st.set_page_config(
     page_title="Codificator 3001 - Dra. Javiera Saavedra Nazer",
     layout="wide",
