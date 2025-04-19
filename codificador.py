@@ -41,7 +41,7 @@ if not st.session_state["authenticated"]:
     password = st.text_input("Contraseña:", type="password")
     if password == PASSWORD:
         st.session_state["authenticated"] = True
-        st.experimental_rerun()
+        st.rerun()
     elif password:
         st.error("Contraseña incorrecta.")
         st.stop()
