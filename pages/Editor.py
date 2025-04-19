@@ -240,23 +240,25 @@ with tabs[1]:
         filtered_df = filtered_df[filtered_df["group"] == group_filter]
 
     edited_df = st.data_editor(
-        filtered_df.drop(columns=["_index"]),
-        num_rows="dynamic",
-        use_container_width=True,
-        key="editor_glosary"
-    )
+    filtered_df,  # Keep _index inside the editor
+    num_rows="dynamic",
+    use_container_width=True,
+    key="editor_glosary"
+)
 
+    # Button to save edited rows
     if st.button("💾 Guardar cambios en la tabla filtrada"):
         try:
-            # Use _index to locate and replace rows in the full DataFrame
             full_df = read_data()
-            for i, row_index in enumerate(filtered_df["_index"]):
-                full_df.loc[row_index, ["source", "group", "code", "text"]] = edited_df.iloc[i]
+    
+            for i in range(len(edited_df)):
+                row_index = edited_df.loc[i, "_index"]  # ✅ Use _index preserved in the edited_df
+                full_df.loc[row_index, ["source", "group", "code", "text"]] = edited_df.loc[i, ["source", "group", "code", "text"]]
     
             save_data(full_df)
             st.success("✅ Cambios guardados exitosamente en Google Sheets.")
             st.rerun()
-
+    
         except Exception as e:
             st.error("❌ Error al guardar los cambios:")
             st.exception(e)
