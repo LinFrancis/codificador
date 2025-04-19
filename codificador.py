@@ -31,7 +31,7 @@ def connect_to_gsheet(spreadsheet_name, sheet_name):
         st.exception(e)
 
     spreadsheet = client.open(spreadsheet_name)
-    return spreadsheet.worksheet(sheet_name)_name
+    return spreadsheet.worksheet(sheet_name)
 
 # Sheet name variables
 SPREADSHEET_NAME = 'DIAGNOSIS_DATABASE'
