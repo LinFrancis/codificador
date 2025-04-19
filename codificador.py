@@ -184,10 +184,12 @@ st.markdown("""
     margin-bottom: 12px;
 }
 .hello-box p {
+    text-align: center;
     font-size: 16px;
     margin: 6px 0;
 }
 .hello-box a {
+    text-align: center;
     color: #6699cc;
     text-decoration: none;
     font-weight: bold;
