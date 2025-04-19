@@ -131,7 +131,6 @@ with st.form("form_final_entry", clear_on_submit=True):
 
 st.divider()
 
-
 # =========================
 # 📊 VISUALIZAR, EDITAR Y ELIMINAR BASE DE DATOS
 # =========================
@@ -159,38 +158,41 @@ with st.expander("📋 Mostrar y gestionar base de datos"):
 
     if st.button("💾 Guardar cambios en la tabla filtrada"):
         try:
-            save_data(edited_df)
+            full_df = read_data()
+            full_df.update(edited_df.set_index(full_df.index[:len(edited_df)]))
+            save_data(full_df)
             st.success("✅ Cambios guardados exitosamente en Google Sheets.")
-            st.rerun()
+            st.experimental_rerun()
         except Exception as e:
             st.error("❌ Error al guardar los cambios:")
             st.exception(e)
 
-st.markdown("### 🗑️ Seleccionar filas para eliminar")
-selected_rows = st.multiselect(
-    "Selecciona las filas a eliminar:",
-    df_glosary["_index"],
-    format_func=lambda i: f"{i}: {df_glosary.loc[i, 'code']} | {df_glosary.loc[i, 'text'][:40]}..."
-)
+    st.markdown("### 🗑️ Seleccionar filas para eliminar")
+    selected_rows = st.multiselect(
+        "Selecciona las filas a eliminar:",
+        df_glosary["_index"],
+        format_func=lambda i: f"{i}: {df_glosary.loc[i, 'code']} | {df_glosary.loc[i, 'text'][:40]}..."
+    )
 
-if selected_rows:
-    col1, col2 = st.columns([1, 3])
-    with col1:
-        confirm = st.checkbox("⚠️ Confirmar eliminación")
-    with col2:
-        if confirm and st.button("🗑️ Eliminar seleccionadas"):
-            try:
-                deleted_refs = [f"{i}: {df_glosary.loc[i, 'code']} | {df_glosary.loc[i, 'text'][:40]}..." for i in selected_rows]
-                updated_df = df_glosary.drop(index=selected_rows).reset_index(drop=True)
-                save_data(updated_df)
-                st.success("✅ {} fila(s) eliminadas correctamente:\n{}".format(
-                    len(selected_rows), '\n'.join(deleted_refs)
-                ))
-                st.experimental_rerun()
-            except Exception as e:
-                st.error("❌ Error al eliminar filas:")
-                st.exception(e)
-else:
-    st.write("No se han seleccionado filas para eliminar.")
+    if selected_rows:
+        col1, col2 = st.columns([1, 3])
+        with col1:
+            confirm = st.checkbox("⚠️ Confirmar eliminación")
+        with col2:
+            if confirm and st.button("🗑️ Eliminar seleccionadas"):
+                try:
+                    deleted_refs = [f"{i}: {df_glosary.loc[i, 'code']} | {df_glosary.loc[i, 'text'][:40]}..." for i in selected_rows]
+                    updated_df = df_glosary.drop(index=selected_rows)
+                    save_data(updated_df)
+                    st.success("✅ {} fila(s) eliminadas correctamente:
+{}".format(
+                        len(selected_rows), '
+'.join(deleted_refs)))
+                    st.experimental_rerun()
+                except Exception as e:
+                    st.error("❌ Error al eliminar filas:")
+                    st.exception(e)
+    else:
+        st.write("No se han seleccionado filas para eliminar.")
 
 
