@@ -24,22 +24,12 @@ def connect_to_gsheet(spreadsheet_name, sheet_name):
     creds_dict = st.secrets["gsheets"]
     credentials = ServiceAccountCredentials.from_json_keyfile_dict(dict(creds_dict), scope)
     client = gspread.authorize(credentials)
-
-    # ✅ DEBUG: Print all accessible sheet titles
-    try:
-        sheet_titles = [s.title for s in client.openall()]
-        st.success("✅ Sheets your app can access:")
-        st.write(sheet_titles)
-    except Exception as e:
-        st.error("❌ Could not list spreadsheets:")
-        st.exception(e)
-
+  
     spreadsheet = client.open(spreadsheet_name)
     return spreadsheet.worksheet(sheet_name)
 
 # Sheet name variables
 SPREADSHEET_NAME = 'DIAGNOSIS_DATABASE'
-
 SHEET_NAME = 'DIAGNOSIS'
 
 # Connect to the Sheet
