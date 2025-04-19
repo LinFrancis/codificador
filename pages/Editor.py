@@ -139,13 +139,20 @@ st.subheader("📊 Ver y eliminar entradas del glosario")
 df_glosary = read_data()
 df_glosary["_index"] = df_glosary.index
 
-with st.expander("Mostrar tabla completa y seleccionar filas a eliminar"):
+with st.expander("📋 Mostrar y gestionar base de datos"):
+    st.markdown("### 🔍 Vista previa del glosario")
+    st.dataframe(
+        df_glosary.drop(columns=["_index"]),
+        use_container_width=True,
+        height=400
+    )
+
+    st.markdown("### 🗑️ Seleccionar filas para eliminar")
     selected_rows = st.multiselect(
         "Selecciona las filas a eliminar:",
         df_glosary["_index"],
-        format_func=lambda i: f"{i}: {df_glosary.loc[i, 'text'][:30]}..."
+        format_func=lambda i: f"{i}: {df_glosary.loc[i, 'code']} | {df_glosary.loc[i, 'text'][:40]}..."
     )
-    st.dataframe(df_glosary.drop(columns=["_index"]), use_container_width=True)
 
     if selected_rows:
         col1, col2 = st.columns([1, 3])
@@ -162,5 +169,9 @@ with st.expander("Mostrar tabla completa y seleccionar filas a eliminar"):
                     st.exception(e)
     else:
         st.write("No se han seleccionado filas para eliminar.")
+
+
+
+
 
 
