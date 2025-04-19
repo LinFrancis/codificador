@@ -252,7 +252,7 @@ with tabs[1]:
             full_df.update(edited_df.set_index(full_df.index[:len(edited_df)]))
             save_data(full_df)
             st.success("✅ Cambios guardados exitosamente en Google Sheets.")
-            st.experimental_rerun()
+            st.rerun()
         except Exception as e:
             st.error("❌ Error al guardar los cambios:")
             st.exception(e)
