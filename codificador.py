@@ -8,39 +8,38 @@ import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 import streamlit_authenticator as stauth
 
-# Load credentials from secrets
-names = st.secrets.auth.names
-usernames = st.secrets.auth.usernames
-passwords = st.secrets.auth.passwords
+# Hashed password for "hellokitty"
+hashed_password = '$2b$12$8I8Acob9nmg60mtZk8.Q.OlZxGPwUZzR1DQ/30mO6kZ2nRKaKHcO2'
 
+# Only one user
 credentials = {
     "usernames": {
-        usernames[0]: {
-            "name": names[0],
-            "password": passwords[0]
+        "admin": {
+            "name": "Admin",
+            "password": hashed_password,
         }
     }
 }
 
-# Initialize authenticator
 authenticator = stauth.Authenticate(
     credentials,
     cookie_name="codificador_login",
-    key="codificador_key",
+    key="some_key",
     cookie_expiry_days=1
 )
 
-# ✅ CORRECT syntax for version 0.2.3
-name, authentication_status, username = authenticator.login("Iniciar sesión", "main")
+name, auth_status, username = authenticator.login("Iniciar sesión", "main")
 
-if authentication_status is False:
-    st.error("Usuario o contraseña incorrecta.")
+if auth_status is False:
+    st.error("Contraseña incorrecta.")
     st.stop()
-elif authentication_status is None:
-    st.warning("Por favor ingresa tus credenciales.")
+elif auth_status is None:
+    st.warning("Ingresa la contraseña.")
     st.stop()
 
 authenticator.logout("Cerrar sesión", "sidebar")
+
+
 
 st.set_page_config(
     page_title="Codificator 3001 - Dra. Javiera Saavedra Nazer",
