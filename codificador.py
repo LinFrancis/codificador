@@ -166,24 +166,22 @@ st.markdown(
 st.image("image/logo_codificator.png", width=220)
 
 st.markdown("""
-<div style="background-color: #fff0f6; padding: 20px; border-radius: 12px; border: 2px solid #ffb6c1;">
+<div style="background-color: #fff0f6; padding: 20px; border-radius: 12px; border: 2px solid #ffb6c1; font-family: sans-serif;">
     <h2 style="text-align: center; color: #e75480;">🎀 Bienvenida Dra. Javiera Saavedra Nazer 🎀</h2>
 
     <p style="font-size: 16px; text-align: center;">
-    Soy <strong>Codificator 3002 🤖</strong>, su asistente digital.
+        Soy <strong>Codificator 3002 🤖</strong>, su asistente digital.
     </p>
 
-    <ul style="font-size: 15px;">
-        <li>🔍 Use la <strong>barra lateral</strong> para filtrar por fuente o grupo.</li>
-        <li>🧠 Ingrese palabras clave para buscar entradas específicas.</li>
-    </ul>
+    <p style="font-size: 15px;">🔍 Use la <strong>barra lateral</strong> para filtrar por fuente o grupo.</p>
+    <p style="font-size: 15px;">🧠 Ingrese palabras clave para buscar entradas específicas.</p>
 
     <p style="font-size: 14px; text-align: center;">
-    📎 <a href="https://www.linkedin.com/in/javiera-saavedra-nazer-md-faadv-582a7448/" target="_blank"><strong>Ver LinkedIn</strong></a>
+        📎 <a href="https://www.linkedin.com/in/javiera-saavedra-nazer-md-faadv-582a7448/" target="_blank">
+        <strong>Ver LinkedIn</strong></a>
     </p>
 </div>
 """, unsafe_allow_html=True)
-
 
 
 
