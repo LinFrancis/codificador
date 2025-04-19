@@ -246,10 +246,13 @@ with tabs[1]:
         key="editor_glosary"
     )
 
-    if st.button("💾 Guardar cambios en la tabla filtrada"):
+   if st.button("💾 Guardar cambios en la tabla filtrada"):
         try:
+            # Use _index to locate and replace rows in the full DataFrame
             full_df = read_data()
-            full_df.update(edited_df.set_index(full_df.index[:len(edited_df)]))
+            for i, row_index in enumerate(filtered_df["_index"]):
+                full_df.loc[row_index, ["source", "group", "code", "text"]] = edited_df.iloc[i]
+    
             save_data(full_df)
             st.success("✅ Cambios guardados exitosamente en Google Sheets.")
             st.rerun()
