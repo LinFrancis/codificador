@@ -162,83 +162,67 @@ st.markdown(
     unsafe_allow_html=True
 )
 
+# Layout in columns (image on left, welcome box on right)
+col1, col2 = st.columns([1, 3])
+
+with col1:
+    st.image("image/logo_codificator.png", width=180)
+
+with col2:
+    st.markdown("""
+    <style>
+    .hello-box {
+        background: linear-gradient(to bottom, #fff6fb, #ffeef7);
+        padding: 24px;
+        border-radius: 18px;
+        border: 2px solid #ffb6d5;
+        box-shadow: 0px 4px 12px rgba(255, 182, 213, 0.3);
+        font-family: 'Segoe UI', sans-serif;
+        color: #a64d79;
+        margin-bottom: 2rem;
+    }
+    .hello-box h2 {
+        color: #ff69b4;
+        font-size: 24px;
+        margin-bottom: 12px;
+        text-align: center;
+    }
+    .hello-box p {
+        font-size: 16px;
+        margin: 8px 0;
+    }
+    .hello-box a {
+        color: #6699cc;
+        text-decoration: none;
+        font-weight: bold;
+    }
+    .bot-badge {
+        background-color: #e0f2ff;
+        color: #336699;
+        padding: 6px 12px;
+        border-radius: 12px;
+        font-weight: bold;
+        font-size: 15px;
+        box-shadow: 1px 2px 4px rgba(102,153,204,0.2);
+        border: 1px solid #b3d9ff;
+        display: inline-block;
+        font-family: 'Courier New', monospace;
+    }
+    </style>
+
+    <div class="hello-box">
+        <h2>🎀 Bienvenida Dra. Javiera Saavedra Nazer 🎀</h2>
+        <p>🌸 Soy <span class="bot-badge">🤖 Codificator 3002</span> y <strong>estoy a su servicio</strong>.</p>
+        <p>🔍 Use la <strong>barra lateral</strong> para filtrar por fuente o grupo e ingresar palabras clave.</p>
+        <p>📝 En el menú <strong>"Editor"</strong> puede agregar, editar o eliminar información de la base de datos. Los cambios se actualizan en tiempo real.</p>
+        <p>📎 <a href="https://www.linkedin.com/in/javiera-saavedra-nazer-md-faadv-582a7448/" target="_blank">Ver LinkedIn</a></p>
+    </div>
+    """, unsafe_allow_html=True)
 
 
-st.markdown("""
-<style>
-.center-wrapper {
-    display: flex;
-    justify-content: center;
-    margin-top: 30px;
-}
 
-.container {
-    display: flex;
-    align-items: center;
-    background: linear-gradient(to bottom, #fff6fb, #ffeef7);
-    padding: 24px;
-    border-radius: 18px;
-    border: 2px solid #ffb6d5;
-    box-shadow: 0px 4px 12px rgba(255, 182, 213, 0.3);
-    font-family: 'Segoe UI', sans-serif;
-    color: #a64d79;
-    gap: 30px;
-    max-width: 900px;
-}
 
-.container img {
-    max-width: 200px;
-    border-radius: 12px;
-}
 
-.hello-text {
-    flex: 1;
-}
-
-.hello-text h2 {
-    color: #ff69b4;
-    font-size: 24px;
-    margin-bottom: 12px;
-}
-
-.hello-text p {
-    font-size: 16px;
-    margin: 8px 0;
-}
-
-.hello-text a {
-    color: #6699cc;
-    text-decoration: none;
-    font-weight: bold;
-}
-
-.bot-badge {
-    background-color: #e0f2ff;
-    color: #336699;
-    padding: 6px 12px;
-    border-radius: 12px;
-    font-weight: bold;
-    font-size: 15px;
-    box-shadow: 1px 2px 4px rgba(102,153,204,0.2);
-    border: 1px solid #b3d9ff;
-    display: inline-block;
-    font-family: 'Courier New', monospace;
-}
-</style>
-
-<div class="center-wrapper">
-  <div class="container">
-      <img src="image/logo_codificator.png" alt="Logo Codificator">
-      <div class="hello-text">
-          <h2>🎀 Bienvenida Dra. Javiera Saavedra Nazer 🎀</h2>
-          <p>🌸 Soy <span class="bot-badge">🤖 Codificator 3002</span> y <strong>estoy a su servicio</strong>.</p>
-          <p>🔍 Use la <strong>barra lateral</strong> para filtrar por fuente o grupo e ingresar palabras clave.</p>
-          <p>📝 En el menú <strong>"Editor"</strong> puede agregar, editar o eliminar información de la base de datos. Los cambios se actualizan en tiempo real.</p>
-          <p>📎 <a href="https://www.linkedin.com/in/javiera-saavedra-nazer-md-faadv-582a7448/" target="_blank">Ver LinkedIn</a></p>
-      </div>
-  </div>
-</div>
-""", unsafe_allow_html=True)
 # Inicializar el historial de búsqueda en la sesión
 if "search_history" not in st.session_state:
     st.session_state["search_history"] = []
