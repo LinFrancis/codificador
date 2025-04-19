@@ -33,6 +33,7 @@ def read_data():
     return pd.DataFrame(sheet_by_name.get_all_records())
 
 def save_data(df):
+    df = df["source text group code Link".split()]  # Ensure column order
     sheet_by_name.clear()
     sheet_by_name.append_row(df.columns.tolist())
     sheet_by_name.append_rows(df.values.tolist())
@@ -73,7 +74,6 @@ existing_groups = sorted(df_glosary["group"].dropna().astype(str).unique())
 
 with st.form("add_entry_form", clear_on_submit=True):
     use_custom_source = st.checkbox("✏️ Escribir nueva fuente")
-    new_source = ""
     if use_custom_source or not existing_sources:
         new_source = st.text_input("Nueva fuente")
     else:
@@ -82,7 +82,6 @@ with st.form("add_entry_form", clear_on_submit=True):
     new_text = st.text_area("Texto")
 
     use_custom_group = st.checkbox("✏️ Escribir nuevo grupo")
-    new_group = ""
     if use_custom_group or not existing_groups:
         new_group = st.text_input("Nuevo grupo")
     else:
@@ -92,19 +91,24 @@ with st.form("add_entry_form", clear_on_submit=True):
     new_link = st.text_input("Link (opcional)")
 
     if st.form_submit_button("➕ Agregar entrada"):
-        new_row = {
-            "source": new_source,
-            "text": new_text,
-            "group": new_group,
-            "code": new_code,
-            "Link": new_link
-        }
-        try:
-            sheet_by_name.append_row(list(new_row.values()))
-            st.success("✅ Nueva entrada agregada correctamente.")
-        except Exception as e:
-            st.error("❌ Error al agregar la entrada:")
-            st.exception(e)
+        if not new_text or not new_source or not new_group:
+            st.warning("⚠️ Los campos 'Texto', 'Fuente' y 'Grupo' son obligatorios.")
+        else:
+            new_row = {
+                "source": new_source,
+                "text": new_text,
+                "group": new_group,
+                "code": new_code,
+                "Link": new_link
+            }
+            try:
+                current_df = read_data()
+                updated_df = pd.concat([current_df, pd.DataFrame([new_row])], ignore_index=True)
+                save_data(updated_df)
+                st.success("✅ Nueva entrada agregada correctamente.")
+            except Exception as e:
+                st.error("❌ Error al agregar la entrada:")
+                st.exception(e)
 
 st.divider()
 
