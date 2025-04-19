@@ -242,32 +242,29 @@ with tabs[1]:
     if group_filter != "Todas":
         filtered_df = filtered_df[filtered_df["group"] == group_filter]
 
-    # Display editable table
-    edited_df = st.data_editor(
-        filtered_df,
-        num_rows="dynamic",
-        use_container_width=True,
-        key="editor_glosary"
-    )
+    # === Editable table inside a form ===
+    with st.form("edit_table_form"):
+        edited_df = st.data_editor(
+            filtered_df,
+            num_rows="dynamic",
+            use_container_width=True,
+            key="editor_glosary"
+        )
+        submitted = st.form_submit_button("💾 Guardar cambios en la tabla filtrada")
 
-    # Save changes
-    if st.button("💾 Guardar cambios en la tabla filtrada"):
+    # === Save logic ===
+    if submitted:
         try:
             full_df = read_data()
-
             for _, row in edited_df.iterrows():
                 idx = int(row["row_id"])
                 full_df.loc[idx, ["source", "group", "code", "text"]] = row[["source", "group", "code", "text"]]
-
             save_data(full_df)
             st.success("✅ Cambios guardados exitosamente en Google Sheets.")
             st.rerun()
-
         except Exception as e:
             st.error("❌ Error al guardar los cambios:")
             st.exception(e)
-
-
 
 
 with tabs[2]:
