@@ -52,13 +52,16 @@ if not st.session_state["authenticated"]:
         st.image("image/logo_codificator_4.png", width=200)
     with col2:
         st.markdown("""
-        ### Estimada Dra. Javiera Saavedra Nazer  
-        
-        El acceso a esta sección está restringido exclusivamente a personas autorizadas, dado que permite modificar directamente la base de datos oficial.
-    
+        ### Estimada Dra. Javiera Saavedra Nazer""")  
+        st.warning('El acceso a esta sección está restringido a personas autorizadas', icon="🔐")
+        st.markdown("""
         Por favor, introduzca la contraseña correspondiente para continuar.  
-        Si requiere asistencia o no recuerda la clave, comuníquese con su equipo de soporte.
+        Si requiere asistencia, comuníquese con Su equipo de soporte.
         """)
+
+        
+
+        
         password = st.text_input("Contraseña:", type="password")
         if password == PASSWORD:
             st.session_state["authenticated"] = True
