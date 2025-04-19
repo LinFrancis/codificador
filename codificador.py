@@ -9,7 +9,14 @@ from oauth2client.service_account import ServiceAccountCredentials
 
 from PIL import Image
 
+# === Set page config early ===
+st.set_page_config(
+    page_title="Codificator 3001 - Dra. Javiera Saavedra Nazer",
+    layout="wide",
+    initial_sidebar_state="expanded"
+)
 
+# === Show logo at the very top of the sidebar ===
 def show_sidebar_logo():
     with st.sidebar:
         st.markdown(
@@ -21,6 +28,7 @@ def show_sidebar_logo():
         st.image("image/logo_codificator.png", width=180)
         st.markdown("</div>", unsafe_allow_html=True)
 
+# CALL THIS BEFORE anything else that adds content to the sidebar
 show_sidebar_logo()
 
 # ====================
