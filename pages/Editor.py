@@ -73,22 +73,20 @@ existing_groups = sorted(df_glosary["group"].dropna().astype(str).unique())
 
 with st.form("add_entry_form", clear_on_submit=True):
     use_custom_source = st.checkbox("✏️ Escribir nueva fuente")
-    if use_custom_source:
+    new_source = ""
+    if use_custom_source or not existing_sources:
         new_source = st.text_input("Nueva fuente")
     else:
         new_source = st.selectbox("Fuente existente:", existing_sources)
-        if new_source == "" or new_source.isspace():
-            new_source = st.text_input("Nueva fuente (si la lista estaba vacía)")
 
     new_text = st.text_area("Texto")
 
     use_custom_group = st.checkbox("✏️ Escribir nuevo grupo")
-    if use_custom_group:
+    new_group = ""
+    if use_custom_group or not existing_groups:
         new_group = st.text_input("Nuevo grupo")
     else:
         new_group = st.selectbox("Grupo existente:", existing_groups)
-        if new_group == "" or new_group.isspace():
-            new_group = st.text_input("Nuevo grupo (si la lista estaba vacía)")
 
     new_code = st.text_input("Código")
     new_link = st.text_input("Link (opcional)")
