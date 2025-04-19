@@ -166,7 +166,7 @@ st.markdown(
 col1, col2 = st.columns([1, 3])
 
 with col1:
-    st.image("image/logo_codificator.png", width=180)
+    st.image("image/logo_codificator.png", width=300)
 
 with col2:
     st.markdown("""
@@ -196,23 +196,11 @@ with col2:
         text-decoration: none;
         font-weight: bold;
     }
-    .bot-badge {
-        background-color: #e0f2ff;
-        color: #336699;
-        padding: 6px 12px;
-        border-radius: 12px;
-        font-weight: bold;
-        font-size: 15px;
-        box-shadow: 1px 2px 4px rgba(102,153,204,0.2);
-        border: 1px solid #b3d9ff;
-        display: inline-block;
-        font-family: 'Courier New', monospace;
-    }
-    </style>
+        </style>
 
     <div class="hello-box">
         <h2>🎀 Bienvenida Dra. Javiera Saavedra Nazer 🎀</h2>
-        <p>🌸 Soy <span class="bot-badge">🤖 Codificator 3002</span> y <strong>estoy a su servicio</strong>.</p>
+        <p>🌸 <strong>Soy🤖 Codificator 3002 y estoy a su servicio</strong>.</p>
         <p>🔍 Use la <strong>barra lateral</strong> para filtrar por fuente o grupo e ingresar palabras clave.</p>
         <p>📝 En el menú <strong>"Editor"</strong> puede agregar, editar o eliminar información de la base de datos. Los cambios se actualizan en tiempo real.</p>
         <p>📎 <a href="https://www.linkedin.com/in/javiera-saavedra-nazer-md-faadv-582a7448/" target="_blank">Ver LinkedIn</a></p>
