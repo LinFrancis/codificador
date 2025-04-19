@@ -131,6 +131,7 @@ with st.form("form_final_entry", clear_on_submit=True):
 
 st.divider()
 
+
 # =========================
 # 📊 VISUALIZAR Y ELIMINAR BASE DE DATOS
 # =========================
@@ -163,28 +164,3 @@ with st.expander("Mostrar tabla completa y seleccionar filas a eliminar"):
         st.write("No se han seleccionado filas para eliminar.")
 
 
-# =========================
-st.subheader("🗑️ Eliminar entradas")
-df_glosary = read_data()
-df_glosary["_index"] = df_glosary.index
-selected_rows = st.multiselect(
-    "Selecciona las filas a eliminar:",
-    df_glosary["_index"],
-    format_func=lambda i: f"{i}: {df_glosary.loc[i, 'text'][:30]}..."
-)
-
-if selected_rows:
-    col1, col2 = st.columns([1, 3])
-    with col1:
-        confirm = st.checkbox("⚠️ Confirmar eliminación")
-    with col2:
-        if confirm and st.button("🗑️ Eliminar seleccionadas"):
-            try:
-                updated_df = df_glosary.drop(index=selected_rows).reset_index(drop=True)
-                save_data(updated_df)
-                st.success(f"✅ {len(selected_rows)} fila(s) eliminadas correctamente.")
-            except Exception as e:
-                st.error("❌ Error al eliminar filas:")
-                st.exception(e)
-else:
-    st.write("No se han seleccionado filas para eliminar.")
