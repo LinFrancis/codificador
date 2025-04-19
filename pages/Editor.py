@@ -117,7 +117,10 @@ sheet_by_name = connect_to_gsheet(SPREADSHEET_NAME, SHEET_NAME)
 
 # ✅ FUNCIONES DE DATOS
 def read_data():
-    return pd.DataFrame(sheet_by_name.get_all_records())
+    df = pd.DataFrame(sheet_by_name.get_all_records())
+    df.reset_index(drop=True, inplace=True)
+    df["row_id"] = df.index  # ✅ Add row_id for tracking edits
+    return df
 
 def save_data(df):
     expected_columns = ["source", "group", "code", "text"]
@@ -228,7 +231,6 @@ with tabs[1]:
 
     # Load and prepare data
     df_glosary = read_data()
-    df_glosary["row_id"] = df_glosary.index  # use safe column name
 
     # Filters
     source_filter = st.selectbox("Filtrar por fuente:", ["Todas"] + sorted(df_glosary['source'].dropna().unique().tolist()))
@@ -252,15 +254,19 @@ with tabs[1]:
     if st.button("💾 Guardar cambios en la tabla filtrada"):
         try:
             full_df = read_data()
+
             for _, row in edited_df.iterrows():
                 idx = int(row["row_id"])
                 full_df.loc[idx, ["source", "group", "code", "text"]] = row[["source", "group", "code", "text"]]
+
             save_data(full_df)
             st.success("✅ Cambios guardados exitosamente en Google Sheets.")
             st.rerun()
+
         except Exception as e:
             st.error("❌ Error al guardar los cambios:")
             st.exception(e)
+
 
 with tabs[2]:
     st.markdown("### 🗑️ Seleccionar filas para eliminar")
