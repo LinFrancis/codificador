@@ -168,7 +168,7 @@ with st.expander("📋 Mostrar y gestionar base de datos"):
             st.exception(e)
 
 st.markdown("### 🗑️ Seleccionar filas para eliminar")
-    selected_rows = st.multiselect(
+selected_rows = st.multiselect(
         "Selecciona las filas a eliminar:",
         df_glosary["_index"],
         format_func=lambda i: f"{i}: {df_glosary.loc[i, 'code']} | {df_glosary.loc[i, 'text'][:40]}..."
