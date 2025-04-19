@@ -59,21 +59,20 @@ group_options = sorted(df_glosary["group"].dropna().unique()) + ["Otro"]
 
 with st.form("add_simple_entry_form", clear_on_submit=True):
     selected_source = st.selectbox("Selecciona fuente:", source_options)
-    new_source = ""
-    if selected_source == "Otro":
-        new_source = st.text_input("Escribe nueva fuente")
-    
     selected_group = st.selectbox("Selecciona grupo:", group_options)
-    new_group = ""
-    if selected_group == "Otro":
-        new_group = st.text_input("Escribe nuevo grupo")
+
+    show_new_source = selected_source == "Otro"
+    show_new_group = selected_group == "Otro"
+
+    new_source = st.text_input("Escribe nueva fuente:", key="new_source") if show_new_source else ""
+    new_group = st.text_input("Escribe nuevo grupo:", key="new_group") if show_new_group else ""
 
     new_code = st.text_input("Código")
     new_text = st.text_area("Texto")
 
     if st.form_submit_button("Agregar entrada"):
-        final_source = new_source.strip() if selected_source == "Otro" else selected_source.strip()
-        final_group = new_group.strip() if selected_group == "Otro" else selected_group.strip()
+        final_source = new_source.strip() if show_new_source else selected_source.strip()
+        final_group = new_group.strip() if show_new_group else selected_group.strip()
 
         if not new_text.strip() or not final_source or not final_group:
             st.warning("⚠️ Los campos 'Texto', 'Fuente' y 'Grupo' son obligatorios.")
@@ -92,37 +91,6 @@ with st.form("add_simple_entry_form", clear_on_submit=True):
             except Exception as e:
                 st.error("❌ Error al agregar la entrada:")
                 st.exception(e)
-
-st.divider()
-
-# =========================
-# 🗑️ ELIMINAR ENTRADAS
-# =========================
-st.subheader("🗑️ Eliminar entradas")
-df_glosary = read_data()
-df_glosary["_index"] = df_glosary.index
-selected_rows = st.multiselect(
-    "Selecciona las filas a eliminar:",
-    df_glosary["_index"],
-    format_func=lambda i: f"{i}: {df_glosary.loc[i, 'text'][:30]}..."
-)
-
-if selected_rows:
-    col1, col2 = st.columns([1, 3])
-    with col1:
-        confirm = st.checkbox("⚠️ Confirmar eliminación")
-    with col2:
-        if confirm and st.button("🗑️ Eliminar seleccionadas"):
-            try:
-                updated_df = df_glosary.drop(index=selected_rows).reset_index(drop=True)
-                save_data(updated_df)
-                st.success(f"✅ {len(selected_rows)} fila(s) eliminadas correctamente.")
-            except Exception as e:
-                st.error("❌ Error al eliminar filas:")
-                st.exception(e)
-else:
-    st.write("No se han seleccionado filas para eliminar.")
-
 
 st.divider()
 
