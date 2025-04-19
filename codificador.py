@@ -34,7 +34,7 @@ def connect_to_gsheet(spreadsheet_name, sheet_name):
     return spreadsheet.worksheet(sheet_name)
 
 # Sheet name variables
-SPREADSHEET_NAME = 'Streamlit'
+SPREADSHEET_NAME = 'DIAGNOSIS_DATABASE'
 
 SHEET_NAME = 'DIAGNOSIS'
 
