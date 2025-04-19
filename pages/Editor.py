@@ -223,40 +223,7 @@ with tabs[0]:
 
 # st.divider()
 
-with tabs[2]:
-    st.markdown("### 🗑️ Seleccionar filas para eliminar")
 
-    df_glosary = read_data()  # Make sure you're using fresh data with row_id
-    row_ids = df_glosary["row_id"]
-
-    selected_rows = st.multiselect(
-        "Selecciona las filas a eliminar:",
-        row_ids,
-        format_func=lambda i: f"{i}: {df_glosary.loc[i, 'code']} | {df_glosary.loc[i, 'text'][:40]}..."
-    )
-
-    if selected_rows:
-        col1, col2 = st.columns([1, 3])
-        with col1:
-            confirm = st.checkbox("⚠️ Confirmar eliminación")
-        with col2:
-            if confirm and st.button("🗑️ Eliminar seleccionadas"):
-                try:
-                    deleted_refs = [
-                        f"{i}: {df_glosary.loc[i, 'code']} | {df_glosary.loc[i, 'text'][:40]}..."
-                        for i in selected_rows
-                    ]
-                    updated_df = df_glosary.drop(index=selected_rows)
-                    save_data(updated_df)
-                    st.success("✅ {} fila(s) eliminadas correctamente:\n{}".format(
-                        len(selected_rows), "\n".join(deleted_refs)
-                    ))
-                    st.rerun()
-                except Exception as e:
-                    st.error("❌ Error al eliminar filas:")
-                    st.exception(e)
-    else:
-        st.write("No se han seleccionado filas para eliminar.")
 
 with tabs[2]:
     st.markdown("### 🗑️ Seleccionar filas para eliminar")
