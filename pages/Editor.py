@@ -57,8 +57,8 @@ if "grupo_confirmado" not in st.session_state:
 st.subheader("➕ Agregar nueva entrada")
 
 df_glosary = read_data()
-source_options = sorted(df_glosary["source"].dropna().unique()) + ["Otro"]
-group_options = sorted(df_glosary["group"].dropna().unique()) + ["Otro"]
+source_options =  ["Otro"] + sorted(df_glosary["source"].dropna().unique()) 
+group_options =  ["Otro"] + sorted(df_glosary["group"].dropna().unique())
 
 # === FORMULARIO DE FUENTE ===
 with st.form("form_fuente"):
