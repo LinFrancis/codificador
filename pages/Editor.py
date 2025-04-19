@@ -127,7 +127,7 @@ with st.form("form_final_entry", clear_on_submit=True):
     if st.form_submit_button("🧹 Limpiar formulario"):
         st.session_state.fuente_confirmada = ""
         st.session_state.grupo_confirmado = ""
-        st.experimental_rerun()
+        st.rerun()
 
 st.divider()
 
