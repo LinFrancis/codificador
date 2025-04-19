@@ -141,29 +141,30 @@ df_glosary["_index"] = df_glosary.index
 
 with st.expander("📋 Mostrar y gestionar base de datos"):
     st.markdown("### 🔍 Vista previa del glosario")
+
     source_filter = st.selectbox("Filtrar por fuente:", ["Todas"] + sorted(df_glosary['source'].dropna().unique().tolist()))
-    group_filter = st.selectbox("Filtrar por grupo:", ["Todas"] + sorted(df_glosary['group'].dropna().unique().tolist()))("Filtrar por grupo:", ["Todas"] + sorted(df_glosary['group'].dropna().unique().tolist()))
+    group_filter = st.selectbox("Filtrar por grupo:", ["Todas"] + sorted(df_glosary['group'].dropna().unique().tolist()))
 
-filtered_df = df_glosary.copy()
-if source_filter != "Todas":
-    filtered_df = filtered_df[filtered_df["source"] == source_filter]
-if group_filter != "Todas":
-    filtered_df = filtered_df[filtered_df["group"] == group_filter]
+    filtered_df = df_glosary.copy()
+    if source_filter != "Todas":
+        filtered_df = filtered_df[filtered_df["source"] == source_filter]
+    if group_filter != "Todas":
+        filtered_df = filtered_df[filtered_df["group"] == group_filter]
 
-st.dataframe(
+    st.dataframe(
         filtered_df.drop(columns=["_index"]),
         use_container_width=True,
         height=400
     )
 
-st.markdown("### 🗑️ Seleccionar filas para eliminar")
-selected_rows = st.multiselect(
+    st.markdown("### 🗑️ Seleccionar filas para eliminar")
+    selected_rows = st.multiselect(
         "Selecciona las filas a eliminar:",
         df_glosary["_index"],
         format_func=lambda i: f"{i}: {df_glosary.loc[i, 'code']} | {df_glosary.loc[i, 'text'][:40]}..."
     )
 
-if selected_rows:
+    if selected_rows:
         col1, col2 = st.columns([1, 3])
         with col1:
             confirm = st.checkbox("⚠️ Confirmar eliminación")
@@ -173,15 +174,13 @@ if selected_rows:
                     deleted_refs = [f"{i}: {df_glosary.loc[i, 'code']} | {df_glosary.loc[i, 'text'][:40]}..." for i in selected_rows]
                     updated_df = df_glosary.drop(index=selected_rows).reset_index(drop=True)
                     save_data(updated_df)
-                    st.success("✅ {} fila(s) eliminadas correctamente:
-{}".format(
-                        len(selected_rows), '
-'.join(deleted_refs)))
+                    st.success("✅ {} fila(s) eliminadas correctamente:\n{}".format(
+                        len(selected_rows), '\n'.join(deleted_refs)
+                    ))
                     st.experimental_rerun()
-                    st.success(f"✅ {len(selected_rows)} fila(s) eliminadas correctamente.")
                 except Exception as e:
                     st.error("❌ Error al eliminar filas:")
                     st.exception(e)
-else:
+    else:
         st.write("No se han seleccionado filas para eliminar.")
 
