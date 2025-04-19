@@ -10,18 +10,18 @@ from oauth2client.service_account import ServiceAccountCredentials
 from PIL import Image
 
 
-def show_logo():
-    st.markdown(
-        """
-        <div style="background-color: white; padding: 10px; border-radius: 12px; text-align: center;">
-        """,
-        unsafe_allow_html=True
-    )
-    st.image("image/logo_codificator.png", width=250)
-    st.markdown("</div>", unsafe_allow_html=True)
+def show_sidebar_logo():
+    with st.sidebar:
+        st.markdown(
+            """
+            <div style="background-color: white; padding: 10px; border-radius: 12px; text-align: center;">
+            """,
+            unsafe_allow_html=True
+        )
+        st.image("image/logo_codificator.png", width=180)
+        st.markdown("</div>", unsafe_allow_html=True)
 
-show_logo()
-
+show_sidebar_logo()
 
 # ====================
 # 🔐 PASSWORD PROTECTION with session + logout
