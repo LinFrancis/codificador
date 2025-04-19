@@ -5,7 +5,7 @@ from oauth2client.service_account import ServiceAccountCredentials
 
 # ✅ CONFIGURACIÓN INICIAL
 st.set_page_config(
-    page_title="Codificator 3001 - Dra. Javiera Saavedra Nazer",
+    page_title="Codificator 3002 - Dra. Javiera Saavedra Nazer",
     layout="wide",
     initial_sidebar_state="expanded"
 )
@@ -30,7 +30,7 @@ if st.session_state["authenticated"]:
 
 # Login screen
 if not st.session_state["authenticated"]:
-    st.markdown("<h1 style='text-align: center;'>🔐 Codificator 3001 – Acceso restringido</h1>", unsafe_allow_html=True)
+    st.markdown("<h1 style='text-align: center;'>🔐 Codificator 3002 – Acceso restringido</h1>", unsafe_allow_html=True)
     st.markdown("""
     ### Estimada Dra. Javiera Saavedra Nazer  
     
@@ -130,7 +130,7 @@ def save_data(df):
     sheet_by_name.append_rows(df.fillna("").values.tolist())
 
 # ✅ CARGAR DATOS
-st.title("Codificator 3001")
+st.title("Codificator 3002")
 df_glosary = read_data()
 
 st.info("✍️ Agrega nuevas entradas o elimina filas seleccionadas. Los cambios se guardan automáticamente.")
@@ -221,7 +221,7 @@ st.divider()
 # =========================
 # 📊 VISUALIZAR, EDITAR Y ELIMINAR BASE DE DATOS
 # =========================
-st.subheader("📊 Ver, editar y eliminar entradas del glosario")
+st.subheader("📊 Ver, editar y eliminar entradas")
 df_glosary = read_data()
 df_glosary["_index"] = df_glosary.index
 
