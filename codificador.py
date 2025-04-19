@@ -44,7 +44,7 @@ if not st.session_state["authenticated"]:
     Soy el **Codificator 3002 🤖** y estoy a su servicio.
 
     Para continuar, por favor ingrese la contraseña en el campo a continuación.  
-    Si tiene problemas de acceso, contacte al administrador.
+    Si tiene problemas de acceso, contacte a su encargado de sistemas.
     """)
     password = st.text_input("Contraseña:", type="password")
     if password == PASSWORD:
@@ -163,26 +163,45 @@ st.markdown(
 )
 
 
-st.image("image/logo_codificator.png", width=220)
+st.image("image/logo_codificator.png", width=200)
 
-html_code = """
-<div style="background-color: #fff0f6; padding: 20px; border-radius: 12px; border: 2px solid #ffb6c1; font-family: sans-serif;">
-  <h2 style="text-align: center; color: #e75480;">🎀 Bienvenida Dra. Javiera Saavedra Nazer 🎀</h2>
+st.markdown("""
+<style>
+.hello-box {
+    background: linear-gradient(to bottom, #fff6fb, #ffeef7);
+    padding: 24px;
+    border-radius: 18px;
+    border: 2px solid #ffb6d5;
+    box-shadow: 0px 4px 12px rgba(255, 182, 213, 0.3);
+    font-family: 'Segoe UI', sans-serif;
+    color: #a64d79;
+    margin-bottom: 2rem;
+}
+.hello-box h2 {
+    text-align: center;
+    color: #ff69b4;
+    font-size: 24px;
+    margin-bottom: 12px;
+}
+.hello-box p {
+    font-size: 16px;
+    margin: 6px 0;
+}
+.hello-box a {
+    color: #6699cc;
+    text-decoration: none;
+    font-weight: bold;
+}
+</style>
 
-  <p style="font-size: 16px; text-align: center;">
-    Soy <strong>Codificator 3002 🤖</strong>, su asistente digital.
-  </p>
-
-  <p style="font-size: 15px;">🔍 Use la <strong>barra lateral</strong> para filtrar por fuente o grupo.</p>
-  <p style="font-size: 15px;">🧠 Ingrese palabras clave para buscar entradas específicas.</p>
-
-  <p style="font-size: 14px; text-align: center;">
-    📎 <a href="https://www.linkedin.com/in/javiera-saavedra-nazer-md-faadv-582a7448/" target="_blank"><strong>Ver LinkedIn</strong></a>
-  </p>
+<div class="hello-box">
+    <h2>🎀 Bienvenida Dra. Javiera Saavedra Nazer 🎀</h2>
+    <p>🌸 Soy <strong>Codificator 3002</strong>, su asistente digital de confianza.</p>
+    <p>🔍 Use la <strong>barra lateral</strong> para filtrar por fuente o grupo.</p>
+    <p>🧠 Ingrese palabras clave para buscar entradas fácilmente.</p>
+    <p>📎 <a href="https://www.linkedin.com/in/javiera-saavedra-nazer-md-faadv-582a7448/" target="_blank">Ver LinkedIn</a></p>
 </div>
-"""
-
-st.markdown(html_code, unsafe_allow_html=True)
+""", unsafe_allow_html=True)
 
 
 
