@@ -178,18 +178,15 @@ st.markdown("""
     margin-bottom: 2rem;
 }
 .hello-box h2 {
-    text-align: center;
     color: #ff69b4;
     font-size: 24px;
     margin-bottom: 12px;
 }
 .hello-box p {
-    text-align: center;
     font-size: 16px;
     margin: 6px 0;
 }
 .hello-box a {
-    text-align: center;
     color: #6699cc;
     text-decoration: none;
     font-weight: bold;
@@ -198,7 +195,7 @@ st.markdown("""
 
 <div class="hello-box">
     <h2>🎀 Bienvenida Dra. Javiera Saavedra Nazer 🎀</h2>
-    <p>🌸 Soy <strong>Codificator 3002</strong>, su asistente digital de confianza.</p>
+    <p>🌸 Soy <span class="bot-badge">🤖 Codificator 3002</span>, su asistente digital de confianza.</p>
     <p>🔍 Use la <strong>barra lateral</strong> para filtrar por fuente o grupo.</p>
     <p>🧠 Ingrese palabras clave para buscar entradas fácilmente.</p>
     <p>📎 <a href="https://www.linkedin.com/in/javiera-saavedra-nazer-md-faadv-582a7448/" target="_blank">Ver LinkedIn</a></p>
