@@ -195,9 +195,9 @@ st.markdown("""
 
 <div class="hello-box">
     <h2>🎀 Bienvenida Dra. Javiera Saavedra Nazer 🎀</h2>
-    <p>🌸 Soy <span class="bot-badge">🤖 Codificator 3002</span>, su asistente digital de confianza.</p>
-    <p>🔍 Use la <strong>barra lateral</strong> para filtrar por fuente o grupo.</p>
-    <p>🧠 Ingrese palabras clave para buscar entradas fácilmente.</p>
+    <p>🌸 Soy <span class="bot-badge">🤖 Codificator 3002</span> y <strong>estoy a su servicio</strong>.</p>
+    <p>🔍 Use la <strong>barra lateral</strong> para filtrar por fuente o grupo e ingrese palabras clave para buscar entradas fácilmente.</p>.</p>
+   
     <p>📎 <a href="https://www.linkedin.com/in/javiera-saavedra-nazer-md-faadv-582a7448/" target="_blank">Ver LinkedIn</a></p>
 </div>
 """, unsafe_allow_html=True)
