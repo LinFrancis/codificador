@@ -33,7 +33,11 @@ def read_data():
     return pd.DataFrame(sheet_by_name.get_all_records())
 
 def save_data(df):
-    df = df["source text group code Link".split()]  # Ensure column order
+    expected_columns = ["source", "text", "group", "code", "Link"]
+    for col in expected_columns:
+        if col not in df.columns:
+            df[col] = ""
+    df = df[expected_columns]  # Ensure column order
     sheet_by_name.clear()
     sheet_by_name.append_row(df.columns.tolist())
     sheet_by_name.append_rows(df.values.tolist())
@@ -74,18 +78,12 @@ existing_groups = sorted(df_glosary["group"].dropna().astype(str).unique())
 
 with st.form("add_entry_form", clear_on_submit=True):
     use_custom_source = st.checkbox("✏️ Escribir nueva fuente")
-    if use_custom_source or not existing_sources:
-        new_source = st.text_input("Nueva fuente")
-    else:
-        new_source = st.selectbox("Fuente existente:", existing_sources)
+    new_source = st.text_input("Nueva fuente") if use_custom_source or not existing_sources else st.selectbox("Fuente existente:", existing_sources)
 
     new_text = st.text_area("Texto")
 
     use_custom_group = st.checkbox("✏️ Escribir nuevo grupo")
-    if use_custom_group or not existing_groups:
-        new_group = st.text_input("Nuevo grupo")
-    else:
-        new_group = st.selectbox("Grupo existente:", existing_groups)
+    new_group = st.text_input("Nuevo grupo") if use_custom_group or not existing_groups else st.selectbox("Grupo existente:", existing_groups)
 
     new_code = st.text_input("Código")
     new_link = st.text_input("Link (opcional)")
