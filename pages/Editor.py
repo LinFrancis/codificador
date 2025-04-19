@@ -229,34 +229,33 @@ with tabs[1]:
     df_glosary = read_data()
     df_glosary["_index"] = df_glosary.index
     
-    with st.expander("📋 Mostrar y gestionar base de datos"):
-        st.markdown("### 🔍 Vista previa del glosario")
-        source_filter = st.selectbox("Filtrar por fuente:", ["Todas"] + sorted(df_glosary['source'].dropna().unique().tolist()))
-        group_filter = st.selectbox("Filtrar por grupo:", ["Todas"] + sorted(df_glosary['group'].dropna().unique().tolist()))
     
-        filtered_df = df_glosary.copy()
-        if source_filter != "Todas":
-            filtered_df = filtered_df[filtered_df["source"] == source_filter]
-        if group_filter != "Todas":
-            filtered_df = filtered_df[filtered_df["group"] == group_filter]
-    
-        edited_df = st.data_editor(
-            filtered_df.drop(columns=["_index"]),
-            num_rows="dynamic",
-            use_container_width=True,
-            key="editor_glosary"
-        )
-    
-        if st.button("💾 Guardar cambios en la tabla filtrada"):
-            try:
-                full_df = read_data()
-                full_df.update(edited_df.set_index(full_df.index[:len(edited_df)]))
-                save_data(full_df)
-                st.success("✅ Cambios guardados exitosamente en Google Sheets.")
-                st.experimental_rerun()
-            except Exception as e:
-                st.error("❌ Error al guardar los cambios:")
-                st.exception(e)
+    source_filter = st.selectbox("Filtrar por fuente:", ["Todas"] + sorted(df_glosary['source'].dropna().unique().tolist()))
+    group_filter = st.selectbox("Filtrar por grupo:", ["Todas"] + sorted(df_glosary['group'].dropna().unique().tolist()))
+
+    filtered_df = df_glosary.copy()
+    if source_filter != "Todas":
+        filtered_df = filtered_df[filtered_df["source"] == source_filter]
+    if group_filter != "Todas":
+        filtered_df = filtered_df[filtered_df["group"] == group_filter]
+
+    edited_df = st.data_editor(
+        filtered_df.drop(columns=["_index"]),
+        num_rows="dynamic",
+        use_container_width=True,
+        key="editor_glosary"
+    )
+
+    if st.button("💾 Guardar cambios en la tabla filtrada"):
+        try:
+            full_df = read_data()
+            full_df.update(edited_df.set_index(full_df.index[:len(edited_df)]))
+            save_data(full_df)
+            st.success("✅ Cambios guardados exitosamente en Google Sheets.")
+            st.experimental_rerun()
+        except Exception as e:
+            st.error("❌ Error al guardar los cambios:")
+            st.exception(e)
 
 with tabs[2]:
     st.markdown("### 🗑️ Seleccionar filas para eliminar")
