@@ -39,6 +39,7 @@ if st.session_state["authenticated"]:
 # Login screen
 if not st.session_state["authenticated"]:
     st.markdown("<h1 style='text-align: center;'>🔐 Codificator 3001</h1>", unsafe_allow_html=True)
+    st.imagen("image/logo_codificator.png")
     st.markdown("""
     ### Bienvenida Dra. Javiera Saavedra Nazer  
     Soy el **Codificator 3002 🤖** y estoy a su servicio.
