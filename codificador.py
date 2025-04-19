@@ -7,7 +7,39 @@ from rapidfuzz import fuzz
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 
-# ✅ FIRST Streamlit command
+
+import streamlit_authenticator as stauth
+
+# ====================
+# AUTHENTICATION
+# ====================
+names = st.secrets.auth.names
+usernames = st.secrets.auth.usernames
+hashed_passwords = st.secrets.auth.passwords
+
+authenticator = stauth.Authenticate(
+    names,
+    usernames,
+    hashed_passwords,
+    'codificador_login',
+    'codificador_app',
+    cookie_expiry_days=1
+)
+
+name, authentication_status, username = authenticator.login('Iniciar sesión', 'main')
+
+if authentication_status is False:
+    st.error('Usuario o contraseña incorrecta.')
+    st.stop()
+elif authentication_status is None:
+    st.warning('Por favor ingresa tus credenciales.')
+    st.stop()
+
+# Optional logout button
+authenticator.logout("Cerrar sesión", "sidebar")
+
+
+
 st.set_page_config(
     page_title="Codificator 3001 - Dra. Javiera Saavedra Nazer",
     layout="wide",
