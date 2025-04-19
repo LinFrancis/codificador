@@ -162,13 +162,7 @@ with st.expander("Mostrar tabla completa y seleccionar filas a eliminar"):
     else:
         st.write("No se han seleccionado filas para eliminar.")
 
-# =========================
-st.subheader("📊 Ver base de datos completa")
-with st.expander("Mostrar tabla completa"):
-    st.dataframe(df_glosary.drop(columns=["_index"]) if "_index" in df_glosary.columns else df_glosary, use_container_width=True)
 
-# =========================
-# 🗑️ ELIMINAR ENTRADAS
 # =========================
 st.subheader("🗑️ Eliminar entradas")
 df_glosary = read_data()
@@ -194,4 +188,3 @@ if selected_rows:
                 st.exception(e)
 else:
     st.write("No se han seleccionado filas para eliminar.")
-
