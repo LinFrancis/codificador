@@ -12,6 +12,7 @@ st.set_page_config(
 
 st.logo("image/logo_codificator.png", size="large", link=None, icon_image="image/logo_codificator.png")
 
+
 # ====================
 # 🔐 PASSWORD PROTECTION with session + logout
 # ====================
@@ -37,7 +38,7 @@ if not st.session_state["authenticated"]:
     El acceso a esta sección está restringido exclusivamente a personas autorizadas, dado que permite modificar directamente la base de datos oficial.
 
     Por favor, introduzca la contraseña correspondiente para continuar.  
-    Si requiere asistencia o no recuerda la clave, comuníquese con su equipo de soporte correspondiente.
+    Si requiere asistencia o no recuerda la clave, comuníquese con su equipo de soporte.
     """)
 
     password = st.text_input("Contraseña de acceso:", type="password")
@@ -49,6 +50,7 @@ if not st.session_state["authenticated"]:
         st.stop()
     else:
         st.stop()
+
 
 
 # Layout in columns (image on left, welcome box on right)
