@@ -13,14 +13,25 @@ st.set_page_config(
     initial_sidebar_state="expanded")
 
 # ====================
-# 🔐 SIMPLE PASSWORD PROTECTION
+# 🔐 SIMPLE PASSWORD PROTECTION with session memory
 # ====================
 PASSWORD = "hellokitty"
-password = st.text_input("🔐 Ingresa la contraseña para acceder:", type="password")
-if password != PASSWORD:
-    st.warning("Contraseña incorrecta o pendiente.")
-    st.stop()
 
+# Show input only if not authenticated yet
+if "authenticated" not in st.session_state:
+    st.session_state["authenticated"] = False
+
+if not st.session_state["authenticated"]:
+    st.title("🔐 Acceso restringido")
+    password = st.text_input("Ingresa la contraseña:", type="password")
+    if password == PASSWORD:
+        st.session_state["authenticated"] = True
+        st.experimental_rerun()
+    elif password:
+        st.error("Contraseña incorrecta.")
+        st.stop()
+    else:
+        st.stop()
 
 def connect_to_gsheet(spreadsheet_name, sheet_name):
     scope = [
