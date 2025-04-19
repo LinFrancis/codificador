@@ -38,7 +38,7 @@ if st.session_state["authenticated"]:
 
 # Login screen
 if not st.session_state["authenticated"]:
-    st.image("image/logo_codificator.png", width=200)
+    st.image("image/logo_codificator_3.png", width=300)
     st.markdown("""
     ### Bienvenida Dra. Javiera Saavedra Nazer  
     Soy el **Codificator 3002 🤖** y estoy a su servicio.
