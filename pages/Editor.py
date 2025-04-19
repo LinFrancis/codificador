@@ -142,7 +142,7 @@ df_glosary["_index"] = df_glosary.index
 with st.expander("📋 Mostrar y gestionar base de datos"):
     st.markdown("### 🔍 Vista previa del glosario")
     source_filter = st.selectbox("Filtrar por fuente:", ["Todas"] + sorted(df_glosary['source'].dropna().unique().tolist()))
-group_filter = st.selectbox("Filtrar por grupo:", ["Todas"] + sorted(df_glosary['group'].dropna().unique().tolist()))
+    group_filter = st.selectbox("Filtrar por grupo:", ["Todas"] + sorted(df_glosary['group'].dropna().unique().tolist()))("Filtrar por grupo:", ["Todas"] + sorted(df_glosary['group'].dropna().unique().tolist()))
 
 filtered_df = df_glosary.copy()
 if source_filter != "Todas":
@@ -151,10 +151,10 @@ if group_filter != "Todas":
     filtered_df = filtered_df[filtered_df["group"] == group_filter]
 
 st.dataframe(
-    filtered_df.drop(columns=["_index"]),
-    use_container_width=True,
-    height=400
-)
+        filtered_df.drop(columns=["_index"]),
+        use_container_width=True,
+        height=400
+    )
 
     st.markdown("### 🗑️ Seleccionar filas para eliminar")
     selected_rows = st.multiselect(
@@ -173,9 +173,10 @@ st.dataframe(
                     deleted_refs = [f"{i}: {df_glosary.loc[i, 'code']} | {df_glosary.loc[i, 'text'][:40]}..." for i in selected_rows]
                     updated_df = df_glosary.drop(index=selected_rows).reset_index(drop=True)
                     save_data(updated_df)
-                    st.success(f"✅ {len(selected_rows)} fila(s) eliminadas correctamente:
-" + '
-'.join(deleted_refs))
+                    st.success("✅ {} fila(s) eliminadas correctamente:
+{}".format(
+                        len(selected_rows), '
+'.join(deleted_refs)))
                     st.experimental_rerun()
                     st.success(f"✅ {len(selected_rows)} fila(s) eliminadas correctamente.")
                 except Exception as e:
@@ -183,10 +184,4 @@ st.dataframe(
                     st.exception(e)
     else:
         st.write("No se han seleccionado filas para eliminar.")
-
-
-
-
-
-
 
