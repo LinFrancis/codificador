@@ -156,14 +156,14 @@ st.dataframe(
         height=400
     )
 
-    st.markdown("### 🗑️ Seleccionar filas para eliminar")
-    selected_rows = st.multiselect(
+st.markdown("### 🗑️ Seleccionar filas para eliminar")
+selected_rows = st.multiselect(
         "Selecciona las filas a eliminar:",
         df_glosary["_index"],
         format_func=lambda i: f"{i}: {df_glosary.loc[i, 'code']} | {df_glosary.loc[i, 'text'][:40]}..."
     )
 
-    if selected_rows:
+if selected_rows:
         col1, col2 = st.columns([1, 3])
         with col1:
             confirm = st.checkbox("⚠️ Confirmar eliminación")
@@ -182,6 +182,6 @@ st.dataframe(
                 except Exception as e:
                     st.error("❌ Error al eliminar filas:")
                     st.exception(e)
-    else:
+else:
         st.write("No se han seleccionado filas para eliminar.")
 
