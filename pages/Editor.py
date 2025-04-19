@@ -10,21 +10,43 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Set your one password
+# ====================
+# 🔐 PASSWORD PROTECTION with session + logout
+# ====================
 PASSWORD = "hellokitty"
 
-# Ask for password
-st.title("🔐 Acceso restringido")
-password = st.text_input("Ingresa la contraseña:", type="password")
+# Initialize login state
+if "authenticated" not in st.session_state:
+    st.session_state["authenticated"] = False
 
-# Block the app if password is wrong or empty
-if password != PASSWORD:
-    st.warning("Contraseña incorrecta o pendiente.")
-    st.stop()
+# Logout button
+if st.session_state["authenticated"]:
+    with st.sidebar:
+        if st.button("🔓 Cerrar sesión"):
+            st.session_state["authenticated"] = False
+            st.rerun()
 
-# ✅ If password is correct, show the app
-st.success("Acceso concedido")
+# Login screen
+if not st.session_state["authenticated"]:
+    st.markdown("<h1 style='text-align: center;'>🔐 Codificator 3001 – Acceso restringido</h1>", unsafe_allow_html=True)
+    st.markdown("""
+    ### Estimada Dra. Javiera Saavedra Nazer  
+    
+    El acceso a esta sección está restringido exclusivamente a personas autorizadas, dado que permite modificar directamente la base de datos oficial.
 
+    Por favor, introduzca la contraseña correspondiente para continuar.  
+    Si requiere asistencia o no recuerda la clave, comuníquese con su equipo de soporte correspondiente.
+    """)
+
+    password = st.text_input("Contraseña de acceso:", type="password")
+    if password == PASSWORD:
+        st.session_state["authenticated"] = True
+        st.rerun()
+    elif password:
+        st.error("Contraseña incorrecta. Intente nuevamente.")
+        st.stop()
+    else:
+        st.stop()
 
 # ✅ CONEXIÓN A GOOGLE SHEET
 def connect_to_gsheet(spreadsheet_name, sheet_name):
