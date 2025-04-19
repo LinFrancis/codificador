@@ -46,24 +46,28 @@ if st.session_state["authenticated"]:
 
 # Login screen
 if not st.session_state["authenticated"]:
-    st.image("image/logo_codificator_4.png", width=200)
-    st.markdown("""
-    ### Estimada Dra. Javiera Saavedra Nazer  
-    
-    El acceso a esta sección está restringido exclusivamente a personas autorizadas, dado que permite modificar directamente la base de datos oficial.
+    col1, col2 = st.columns([1, 3])
 
-    Por favor, introduzca la contraseña correspondiente para continuar.  
-    Si requiere asistencia o no recuerda la clave, comuníquese con su equipo de soporte.
-    """)
-    password = st.text_input("Contraseña:", type="password")
-    if password == PASSWORD:
-        st.session_state["authenticated"] = True
-        st.rerun()
-    elif password:
-        st.error("Contraseña incorrecta.")
-        st.stop()
-    else:
-        st.stop()
+    with col1:
+        st.image("image/logo_codificator_4.png", width=200)
+    with col2:
+        st.markdown("""
+        ### Estimada Dra. Javiera Saavedra Nazer  
+        
+        El acceso a esta sección está restringido exclusivamente a personas autorizadas, dado que permite modificar directamente la base de datos oficial.
+    
+        Por favor, introduzca la contraseña correspondiente para continuar.  
+        Si requiere asistencia o no recuerda la clave, comuníquese con su equipo de soporte.
+        """)
+        password = st.text_input("Contraseña:", type="password")
+        if password == PASSWORD:
+            st.session_state["authenticated"] = True
+            st.rerun()
+        elif password:
+            st.error("Contraseña incorrecta.")
+            st.stop()
+        else:
+            st.stop()
 
     
 
