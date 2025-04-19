@@ -10,35 +10,37 @@ from oauth2client.service_account import ServiceAccountCredentials
 
 import streamlit_authenticator as stauth
 
-# ====================
-# AUTHENTICATION
-# ====================
+# Load secrets from secrets.toml
 names = st.secrets.auth.names
 usernames = st.secrets.auth.usernames
-hashed_passwords = st.secrets.auth.passwords
+passwords = st.secrets.auth.passwords
+
+credentials = {
+    "usernames": {
+        usernames[0]: {
+            "name": names[0],
+            "password": passwords[0]
+        }
+    }
+}
 
 authenticator = stauth.Authenticate(
-    names,
-    usernames,
-    hashed_passwords,
-    'codificador_login',
-    'codificador_app',
+    credentials=credentials,
+    cookie_name="codificador_login",
+    key="codificador_app",
     cookie_expiry_days=1
 )
 
-name, authentication_status, username = authenticator.login('Iniciar sesión', 'main')
+name, authentication_status, username = authenticator.login("Iniciar sesión", "main")
 
 if authentication_status is False:
-    st.error('Usuario o contraseña incorrecta.')
+    st.error("Usuario o contraseña incorrecta.")
     st.stop()
 elif authentication_status is None:
-    st.warning('Por favor ingresa tus credenciales.')
+    st.warning("Por favor ingresa tus credenciales.")
     st.stop()
 
-# Optional logout button
 authenticator.logout("Cerrar sesión", "sidebar")
-
-
 
 st.set_page_config(
     page_title="Codificator 3001 - Dra. Javiera Saavedra Nazer",
