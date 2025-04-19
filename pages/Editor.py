@@ -40,7 +40,7 @@ def save_data(df):
     df = df[expected_columns]  # Ensure column order
     sheet_by_name.clear()
     sheet_by_name.append_row(df.columns.tolist())
-    sheet_by_name.append_rows(df.values.tolist())
+    sheet_by_name.append_rows(df.fillna("").values.tolist())
 
 # ✅ CARGAR DATOS
 st.title("Codificator 3001")
@@ -73,31 +73,41 @@ st.divider()
 # ➕ AGREGAR NUEVA ENTRADA
 # =========================
 st.subheader("➕ Agregar nueva entrada")
+df_glosary = read_data()
 existing_sources = sorted(df_glosary["source"].dropna().astype(str).unique())
 existing_groups = sorted(df_glosary["group"].dropna().astype(str).unique())
 
 with st.form("add_entry_form", clear_on_submit=True):
     use_custom_source = st.checkbox("✏️ Escribir nueva fuente")
-    new_source = st.text_input("Nueva fuente") if use_custom_source or not existing_sources else st.selectbox("Fuente existente:", existing_sources)
+    if use_custom_source or not existing_sources:
+        new_source = st.text_input("Nueva fuente")
+    else:
+        new_source = st.selectbox("Fuente existente:", existing_sources, key="select_source")
 
     new_text = st.text_area("Texto")
 
     use_custom_group = st.checkbox("✏️ Escribir nuevo grupo")
-    new_group = st.text_input("Nuevo grupo") if use_custom_group or not existing_groups else st.selectbox("Grupo existente:", existing_groups)
+    if use_custom_group or not existing_groups:
+        new_group = st.text_input("Nuevo grupo")
+    else:
+        new_group = st.selectbox("Grupo existente:", existing_groups, key="select_group")
 
     new_code = st.text_input("Código")
     new_link = st.text_input("Link (opcional)")
 
     if st.form_submit_button("➕ Agregar entrada"):
-        if not new_text or not new_source or not new_group:
+        source_val = new_source.strip() if use_custom_source or not existing_sources else new_source
+        group_val = new_group.strip() if use_custom_group or not existing_groups else new_group
+
+        if not new_text.strip() or not source_val or not group_val:
             st.warning("⚠️ Los campos 'Texto', 'Fuente' y 'Grupo' son obligatorios.")
         else:
             new_row = {
-                "source": new_source,
-                "text": new_text,
-                "group": new_group,
-                "code": new_code,
-                "Link": new_link
+                "source": source_val,
+                "text": new_text.strip(),
+                "group": group_val,
+                "code": new_code.strip(),
+                "Link": new_link.strip()
             }
             try:
                 current_df = read_data()
