@@ -161,7 +161,7 @@ with st.expander("📋 Mostrar y gestionar base de datos"):
         try:
             save_data(edited_df)
             st.success("✅ Cambios guardados exitosamente en Google Sheets.")
-            st.experimental_rerun()
+            st.rerun()
         except Exception as e:
             st.error("❌ Error al guardar los cambios:")
             st.exception(e)
