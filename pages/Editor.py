@@ -270,14 +270,15 @@ with tabs[1]:
     
         df_glosary = read_data()  # Make sure you're using fresh data with row_id
         row_ids = df_glosary["row_id"]
-    
+
         selected_rows = st.multiselect(
         "Selecciona las filas a eliminar:",
         row_ids,
-        format_func=lambda i: f"{i}: {df_glosary.loc[i, 'code']} | {df_glosary.loc[i, 'text'][:40]}...",
-        key="delete_multiselect"  # ✅ unique key avoids StreamlitDuplicateElementId
+        format_func=lambda i: f"{i}: {df_glosary[df_glosary['row_id'] == i]['code'].values[0]} | {df_glosary[df_glosary['row_id'] == i]['text'].values[0][:40]}...",
+        key="delete_multiselect"
     )
-
+    
+       
     if selected_rows:
         col1, col2 = st.columns([1, 3])
         with col1:
