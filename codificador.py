@@ -7,10 +7,32 @@ from rapidfuzz import fuzz
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 
+from PIL import Image
+
+# ======================
+# PAGE CONFIGURATION
+# ======================
 st.set_page_config(
     page_title="Codificator 3001 - Dra. Javiera Saavedra Nazer",
     layout="wide",
-    initial_sidebar_state="expanded")
+    initial_sidebar_state="expanded"
+)
+
+# ======================
+# LOGO DISPLAY WITH WHITE BACKGROUND
+# ======================
+def show_logo():
+    logo = Image.open("image/logo_codificator.png")
+    st.markdown(
+        """
+        <div style='background-color: white; padding: 10px; border-radius: 12px; text-align: center;'>
+            <img src="image/logo_codificator.png" alt="Logo Codificator 3002" style="width: 250px;" />
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+
+show_logo()
 
 # ====================
 # 🔐 PASSWORD PROTECTION with session + logout
