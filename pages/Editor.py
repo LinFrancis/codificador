@@ -110,7 +110,7 @@ with st.form("form_final_entry", clear_on_submit=True):
                 st.exception(e)
 
     if st.form_submit_button("🧹 Limpiar formulario"):
-        st.experimental_rerun()
+        st.rerun()
 
 st.divider()
 
