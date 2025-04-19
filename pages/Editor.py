@@ -64,6 +64,9 @@ with st.form("form_fuente"):
     if selected_source == "Otro":
         new_source = st.text_input("Escribe nueva fuente:", key="new_source")
     submitted_fuente = st.form_submit_button("Confirmar fuente")
+    if submitted_fuente:
+        fuente_confirmada = new_source.strip() if selected_source == "Otro" else selected_source.strip()
+        st.success(f"Fuente confirmada: {fuente_confirmada}")
 
 # === FORMULARIO DE GRUPO ===
 with st.form("form_grupo"):
@@ -72,6 +75,10 @@ with st.form("form_grupo"):
     if selected_group == "Otro":
         new_group = st.text_input("Escribe nuevo grupo:", key="new_group")
     submitted_grupo = st.form_submit_button("Confirmar grupo")
+    if submitted_grupo:
+        grupo_confirmado = new_group.strip() if selected_group == "Otro" else selected_group.strip()
+        st.success(f"Grupo confirmado: {grupo_confirmado}")
+
 
 # === FORMULARIO FINAL ===
 with st.form("form_final_entry", clear_on_submit=True):
