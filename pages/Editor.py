@@ -238,36 +238,36 @@ with tabs[1]:
     if group_filter != "Todas":
         filtered_df = filtered_df[filtered_df["group"] == group_filter]
 
-    # First button: confirm edits
-    with st.form("edit_table_form"):
-        edited_df = st.data_editor(
-            filtered_df,
-            num_rows="dynamic",
-            use_container_width=True,
-            key="editor_glosary"
-        )
-        confirm_edits = st.form_submit_button("📝 Confirmar edición")
+    edited_df = st.data_editor(
+        filtered_df,
+        num_rows="dynamic",
+        use_container_width=True,
+        key="editor_glosary"
+    )
 
-    if confirm_edits:
-        st.session_state["edited_data_confirmed"] = edited_df
+    # Confirm edits
+    if st.button("📝 Confirmar edición"):
+        st.session_state["edited_data_ready"] = edited_df.copy()
+        st.session_state["confirm_ready"] = True
         st.success("✅ Edición confirmada. Ahora puedes guardar los cambios.")
 
-    # Second button: save edits
-    if "edited_data_confirmed" in st.session_state:
+    # Final Save
+    if st.session_state.get("confirm_ready", False):
         if st.button("💾 Guardar definitivamente"):
             try:
                 full_df = read_data()
-                for _, row in st.session_state["edited_data_confirmed"].iterrows():
+                edited_data = st.session_state["edited_data_ready"]
+                for _, row in edited_data.iterrows():
                     idx = int(row["row_id"])
                     full_df.loc[idx, ["source", "group", "code", "text"]] = row[["source", "group", "code", "text"]]
                 save_data(full_df)
-                del st.session_state["edited_data_confirmed"]
                 st.success("✅ Cambios guardados exitosamente en Google Sheets.")
+                st.session_state.pop("confirm_ready", None)
+                st.session_state.pop("edited_data_ready", None)
                 st.rerun()
             except Exception as e:
                 st.error("❌ Error al guardar los cambios:")
                 st.exception(e)
-
 
 with tabs[2]:
     st.markdown("### 🗑️ Seleccionar filas para eliminar")
