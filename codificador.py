@@ -26,7 +26,7 @@ if st.session_state["authenticated"]:
     with st.sidebar:
         if st.button("🔓 Cerrar sesión"):
             st.session_state["authenticated"] = False
-            st.experimental_rerun()
+            st.rerun()
 
 # Login screen
 if not st.session_state["authenticated"]:
