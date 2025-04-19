@@ -174,7 +174,7 @@ selected_rows = st.multiselect(
         format_func=lambda i: f"{i}: {df_glosary.loc[i, 'code']} | {df_glosary.loc[i, 'text'][:40]}..."
     )
 
-    if selected_rows:
+if selected_rows:
         col1, col2 = st.columns([1, 3])
         with col1:
             confirm = st.checkbox("⚠️ Confirmar eliminación")
@@ -194,5 +194,5 @@ selected_rows = st.multiselect(
                 except Exception as e:
                     st.error("❌ Error al eliminar filas:")
                     st.exception(e)
-    else:
+else:
         st.write("No se han seleccionado filas para eliminar.")
