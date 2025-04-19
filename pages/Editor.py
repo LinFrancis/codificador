@@ -10,6 +10,8 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
+st.logo("image/logo_codificator.png", size="large", link=None, icon_image="image/logo_codificator.png")
+
 # ====================
 # 🔐 PASSWORD PROTECTION with session + logout
 # ====================
