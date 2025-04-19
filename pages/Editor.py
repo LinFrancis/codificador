@@ -223,51 +223,40 @@ with tabs[0]:
 
 # st.divider()
 
-with tabs[1]:
-    # =========================
-    # 📊 VISUALIZAR, EDITAR Y ELIMINAR BASE DE DATOS
-    # =========================
-    st.subheader("📊 Ver, editar y eliminar entradas")
+with tabs[2]:
+    st.markdown("### 🗑️ Seleccionar filas para eliminar")
 
-    # Load and prepare data
-    df_glosary = read_data()
+    df_glosary = read_data()  # Make sure you're using fresh data with row_id
+    row_ids = df_glosary["row_id"]
 
-    # Filters
-    source_filter = st.selectbox("Filtrar por fuente:", ["Todas"] + sorted(df_glosary['source'].dropna().unique().tolist()))
-    group_filter = st.selectbox("Filtrar por grupo:", ["Todas"] + sorted(df_glosary['group'].dropna().unique().tolist()))
-
-    filtered_df = df_glosary.copy()
-    if source_filter != "Todas":
-        filtered_df = filtered_df[filtered_df["source"] == source_filter]
-    if group_filter != "Todas":
-        filtered_df = filtered_df[filtered_df["group"] == group_filter]
-
-    # Display editable table
-    edited_df = st.data_editor(
-        filtered_df,
-        num_rows="dynamic",
-        use_container_width=True,
-        key="editor_glosary"
+    selected_rows = st.multiselect(
+        "Selecciona las filas a eliminar:",
+        row_ids,
+        format_func=lambda i: f"{i}: {df_glosary.loc[i, 'code']} | {df_glosary.loc[i, 'text'][:40]}..."
     )
 
-    # Save changes
-    if st.button("💾 Guardar cambios en la tabla filtrada"):
-        try:
-            full_df = read_data()
-
-            for _, row in edited_df.iterrows():
-                idx = int(row["row_id"])
-                full_df.loc[idx, ["source", "group", "code", "text"]] = row[["source", "group", "code", "text"]]
-
-            save_data(full_df)
-            st.success("✅ Cambios guardados exitosamente en Google Sheets.")
-            st.rerun()
-
-        except Exception as e:
-            st.error("❌ Error al guardar los cambios:")
-            st.exception(e)
-
-
+    if selected_rows:
+        col1, col2 = st.columns([1, 3])
+        with col1:
+            confirm = st.checkbox("⚠️ Confirmar eliminación")
+        with col2:
+            if confirm and st.button("🗑️ Eliminar seleccionadas"):
+                try:
+                    deleted_refs = [
+                        f"{i}: {df_glosary.loc[i, 'code']} | {df_glosary.loc[i, 'text'][:40]}..."
+                        for i in selected_rows
+                    ]
+                    updated_df = df_glosary.drop(index=selected_rows)
+                    save_data(updated_df)
+                    st.success("✅ {} fila(s) eliminadas correctamente:\n{}".format(
+                        len(selected_rows), "\n".join(deleted_refs)
+                    ))
+                    st.rerun()
+                except Exception as e:
+                    st.error("❌ Error al eliminar filas:")
+                    st.exception(e)
+    else:
+        st.write("No se han seleccionado filas para eliminar.")
 with tabs[2]:
     st.markdown("### 🗑️ Seleccionar filas para eliminar")
     selected_rows = st.multiselect(
