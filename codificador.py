@@ -162,7 +162,6 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-
 st.markdown("""
 <style>
 .center-wrapper {
@@ -188,7 +187,6 @@ st.markdown("""
 .container img {
     max-width: 200px;
     border-radius: 12px;
-    animation: sparkle 2.5s ease-in-out infinite;
 }
 
 .hello-text {
@@ -224,12 +222,6 @@ st.markdown("""
     display: inline-block;
     font-family: 'Courier New', monospace;
 }
-
-/* ✨ Sparkle Animation */
-@keyframes sparkle {
-  0%, 100% { transform: scale(1) rotate(0deg); filter: brightness(1); }
-  50% { transform: scale(1.05) rotate(1deg); filter: brightness(1.15); }
-}
 </style>
 
 <div class="center-wrapper">
@@ -245,7 +237,6 @@ st.markdown("""
   </div>
 </div>
 """, unsafe_allow_html=True)
-
 
 
 
