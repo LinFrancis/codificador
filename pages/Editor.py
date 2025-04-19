@@ -223,6 +223,7 @@ with tabs[0]:
 
 # st.divider()
 
+
 with tabs[1]:
     st.subheader("📊 Ver, editar y eliminar entradas")
 
@@ -238,27 +239,32 @@ with tabs[1]:
     if group_filter != "Todas":
         filtered_df = filtered_df[filtered_df["group"] == group_filter]
 
-    # 👉 Let the user edit the table
+    # 👉 Show editable table
     edited_df = st.data_editor(
         filtered_df,
         num_rows="dynamic",
         use_container_width=True,
         key="editor_glosary"
     )
-    
+
+    st.warning("ℹ️ Haz clic dos veces para que los cambios se guarden correctamente.")
+
     # 👉 Save button
     if st.button("💾 Guardar cambios"):
         try:
-            full_df = read_data()  # Reload to make sure index is fresh
-            for i, row in edited_df.iterrows():
-                idx = row["row_id"]  # Make sure row_id exists!
+            full_df = read_data()
+            for _, row in edited_df.iterrows():
+                idx = int(row["row_id"])
                 full_df.loc[idx, ["source", "group", "code", "text"]] = row[["source", "group", "code", "text"]]
             save_data(full_df)
-            st.success("✅ Cambios guardados correctamente.")
+            st.success("✅ Cambios guardados correctamente en Google Sheets.")
             st.rerun()
         except Exception as e:
             st.error("❌ Error al guardar los cambios:")
             st.exception(e)
+
+
+    
     with tabs[2]:
         st.markdown("### 🗑️ Seleccionar filas para eliminar")
     
