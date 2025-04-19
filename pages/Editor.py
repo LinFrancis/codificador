@@ -89,6 +89,8 @@ with col2:
 
     <div class="hello-box">
         <h2>EDITOR DE BASE DE DATOS DE DIAGNÓSTICOS</h2>
+        <p>✍️ Agrega nuevas entradas o elimina filas seleccionadas. Los cambios se guardan automáticamente.</p>
+
            </div>
     """, unsafe_allow_html=True)
 
@@ -131,7 +133,6 @@ def save_data(df):
 # ✅ CARGAR DATOS
 df_glosary = read_data()
 
-st.info("✍️ Agrega nuevas entradas o elimina filas seleccionadas. Los cambios se guardan automáticamente.")
 
 # === INICIALIZAR SESSION STATE ===
 if "fuente_confirmada" not in st.session_state:
