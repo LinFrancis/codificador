@@ -89,9 +89,8 @@ with col2:
 
     <div class="hello-box">
         <h2>EDITOR DE BASE DE DATOS DE DIAGNÓSTICOS</h2>
-        <p>✍️ Agrega nuevas entradas o elimina filas seleccionadas. Los cambios se guardan automáticamente.</p>
-
-           </div>
+        <p>✍️ Aquí puedes agregar nuevas entradas, editar contenido existente o eliminar filas seleccionadas.  
+    Todos los cambios se guardan automáticamente en tiempo real.</p>
     """, unsafe_allow_html=True)
 
 
