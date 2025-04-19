@@ -48,9 +48,12 @@ df_glosary = read_data()
 
 st.info("✍️ Agrega nuevas entradas o elimina filas seleccionadas. Los cambios se guardan automáticamente.")
 
-# =========================
-# ➕ AGREGAR NUEVA ENTRADA
-# =========================
+# === INICIALIZAR SESSION STATE ===
+if "fuente_confirmada" not in st.session_state:
+    st.session_state.fuente_confirmada = ""
+if "grupo_confirmado" not in st.session_state:
+    st.session_state.grupo_confirmado = ""
+
 st.subheader("➕ Agregar nueva entrada")
 
 df_glosary = read_data()
@@ -65,8 +68,11 @@ with st.form("form_fuente"):
         new_source = st.text_input("Escribe nueva fuente:", key="new_source")
     submitted_fuente = st.form_submit_button("Confirmar fuente")
     if submitted_fuente:
-        fuente_confirmada = new_source.strip() if selected_source == "Otro" else selected_source.strip()
-        st.success(f"Fuente confirmada: {fuente_confirmada}")
+        if (selected_source == "Otro" and not new_source.strip()) or selected_source == "":
+            st.warning("⚠️ Debes ingresar o seleccionar una fuente.")
+        else:
+            st.session_state.fuente_confirmada = new_source.strip() if selected_source == "Otro" else selected_source.strip()
+            st.success(f"Fuente confirmada: {st.session_state.fuente_confirmada}")
 
 # === FORMULARIO DE GRUPO ===
 with st.form("form_grupo"):
@@ -76,9 +82,11 @@ with st.form("form_grupo"):
         new_group = st.text_input("Escribe nuevo grupo:", key="new_group")
     submitted_grupo = st.form_submit_button("Confirmar grupo")
     if submitted_grupo:
-        grupo_confirmado = new_group.strip() if selected_group == "Otro" else selected_group.strip()
-        st.success(f"Grupo confirmado: {grupo_confirmado}")
-
+        if (selected_group == "Otro" and not new_group.strip()) or selected_group == "":
+            st.warning("⚠️ Debes ingresar o seleccionar un grupo.")
+        else:
+            st.session_state.grupo_confirmado = new_group.strip() if selected_group == "Otro" else selected_group.strip()
+            st.success(f"Grupo confirmado: {st.session_state.grupo_confirmado}")
 
 # === FORMULARIO FINAL ===
 with st.form("form_final_entry", clear_on_submit=True):
@@ -86,8 +94,8 @@ with st.form("form_final_entry", clear_on_submit=True):
     new_text = st.text_area("Texto")
 
     if st.form_submit_button("Agregar entrada"):
-        final_source = new_source.strip() if selected_source == "Otro" else selected_source.strip()
-        final_group = new_group.strip() if selected_group == "Otro" else selected_group.strip()
+        final_source = st.session_state.get("fuente_confirmada", "")
+        final_group = st.session_state.get("grupo_confirmado", "")
 
         if not new_text.strip() or not final_source or not final_group:
             st.warning("⚠️ Los campos 'Texto', 'Fuente' y 'Grupo' son obligatorios.")
@@ -117,7 +125,9 @@ with st.form("form_final_entry", clear_on_submit=True):
                 st.exception(e)
 
     if st.form_submit_button("🧹 Limpiar formulario"):
-        st.rerun()
+        st.session_state.fuente_confirmada = ""
+        st.session_state.grupo_confirmado = ""
+        st.experimental_rerun()
 
 st.divider()
 
