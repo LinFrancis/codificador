@@ -268,8 +268,8 @@ with tabs[1]:
 def safe_format_row(i):
     match = df_glosary[df_glosary["row_id"] == i]
     if not match.empty:
-        code = match.iloc[0]["code"]
-        text = match.iloc[0]["text"]
+        code = str(match.iloc[0]["code"])
+        text = str(match.iloc[0]["text"])  # 🔐 fuerza texto seguro
         return f"{i}: {code} | {text[:40]}..."
     else:
         return f"{i}: (entrada no encontrada)"
