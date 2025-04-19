@@ -246,8 +246,8 @@ with tabs[1]:
         key="editor_glosary"
     )
 
-   if st.button("💾 Guardar cambios en la tabla filtrada"):
-       try:
+    if st.button("💾 Guardar cambios en la tabla filtrada"):
+        try:
             # Use _index to locate and replace rows in the full DataFrame
             full_df = read_data()
             for i, row_index in enumerate(filtered_df["_index"]):
@@ -256,7 +256,8 @@ with tabs[1]:
             save_data(full_df)
             st.success("✅ Cambios guardados exitosamente en Google Sheets.")
             st.rerun()
-       except Exception as e:
+
+        except Exception as e:
             st.error("❌ Error al guardar los cambios:")
             st.exception(e)
 
