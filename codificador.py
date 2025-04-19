@@ -16,6 +16,21 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
+st.markdown("""
+<style>
+/* Force white background for main content and sidebar */
+body, .main, .stApp {
+    background-color: white !important;
+    color: black !important;
+}
+
+/* Optional: ensure headers stay visible on white */
+h1, h2, h3, h4, h5, h6, p, label {
+    color: black !important;
+}
+</style>
+""", unsafe_allow_html=True)
+
 st.logo("image/logo_codificator.png", size="large", link=None, icon_image="image/logo_codificator.png")
 
 
@@ -38,7 +53,7 @@ if st.session_state["authenticated"]:
 
 # Login screen
 if not st.session_state["authenticated"]:
-    st.image("image/logo_codificator_3.png", width=300)
+    st.image("image/logo_codificator_4.png", width=300)
     st.markdown("""
     ### Bienvenida Dra. Javiera Saavedra Nazer  
     Soy el **Codificator 3002 🤖** y estoy a su servicio.
