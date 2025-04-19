@@ -224,17 +224,13 @@ with tabs[0]:
 # st.divider()
 
 with tabs[1]:
-    # =========================
-    # 📊 VISUALIZAR, EDITAR Y ELIMINAR BASE DE DATOS
-    # =========================
     st.subheader("📊 Ver, editar y eliminar entradas")
 
-    # Load and prepare data
     df_glosary = read_data()
 
     # Filters
-    source_filter = st.selectbox("Filtrar por fuente:", ["Todas"] + sorted(df_glosary['source'].dropna().unique().tolist()))
-    group_filter = st.selectbox("Filtrar por grupo:", ["Todas"] + sorted(df_glosary['group'].dropna().unique().tolist()))
+    source_filter = st.selectbox("Filtrar por fuente:", ["Todas"] + sorted(df_glosary['source'].dropna().unique()))
+    group_filter = st.selectbox("Filtrar por grupo:", ["Todas"] + sorted(df_glosary['group'].dropna().unique()))
 
     filtered_df = df_glosary.copy()
     if source_filter != "Todas":
@@ -242,7 +238,7 @@ with tabs[1]:
     if group_filter != "Todas":
         filtered_df = filtered_df[filtered_df["group"] == group_filter]
 
-    # === Editable table inside a form ===
+    # First button: confirm edits
     with st.form("edit_table_form"):
         edited_df = st.data_editor(
             filtered_df,
@@ -250,21 +246,27 @@ with tabs[1]:
             use_container_width=True,
             key="editor_glosary"
         )
-        submitted = st.form_submit_button("💾 Guardar cambios en la tabla filtrada")
+        confirm_edits = st.form_submit_button("📝 Confirmar edición")
 
-    # === Save logic ===
-    if submitted:
-        try:
-            full_df = read_data()
-            for _, row in edited_df.iterrows():
-                idx = int(row["row_id"])
-                full_df.loc[idx, ["source", "group", "code", "text"]] = row[["source", "group", "code", "text"]]
-            save_data(full_df)
-            st.success("✅ Cambios guardados exitosamente en Google Sheets.")
-            st.rerun()
-        except Exception as e:
-            st.error("❌ Error al guardar los cambios:")
-            st.exception(e)
+    if confirm_edits:
+        st.session_state["edited_data_confirmed"] = edited_df
+        st.success("✅ Edición confirmada. Ahora puedes guardar los cambios.")
+
+    # Second button: save edits
+    if "edited_data_confirmed" in st.session_state:
+        if st.button("💾 Guardar definitivamente"):
+            try:
+                full_df = read_data()
+                for _, row in st.session_state["edited_data_confirmed"].iterrows():
+                    idx = int(row["row_id"])
+                    full_df.loc[idx, ["source", "group", "code", "text"]] = row[["source", "group", "code", "text"]]
+                save_data(full_df)
+                del st.session_state["edited_data_confirmed"]
+                st.success("✅ Cambios guardados exitosamente en Google Sheets.")
+                st.rerun()
+            except Exception as e:
+                st.error("❌ Error al guardar los cambios:")
+                st.exception(e)
 
 
 with tabs[2]:
