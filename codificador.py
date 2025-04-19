@@ -12,12 +12,14 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="expanded")
 
+# ====================
+# 🔐 SIMPLE PASSWORD PROTECTION
+# ====================
 PASSWORD = "hellokitty"
-
-# Ask for password
-st.title("🔐 Acceso restringido")
-password = st.text_input("Ingresa la contraseña:", type="password")
-
+password = st.text_input("🔐 Ingresa la contraseña para acceder:", type="password")
+if password != PASSWORD:
+    st.warning("Contraseña incorrecta o pendiente.")
+    st.stop()
 
 
 def connect_to_gsheet(spreadsheet_name, sheet_name):
