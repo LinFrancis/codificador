@@ -88,9 +88,8 @@ with col2:
         </style>
 
     <div class="hello-box">
-        <h2>Bienvenida al Editor de su base de datos Dra. Javiera Saavedra Nazer</h2>
-        <p>📝<strong>"Aquí"</strong> puede agregar, editar o eliminar información de la base de datos. Los cambios se actualizan en tiempo real.</p>
-    </div>
+        <h2>EDITOR DE BASE DE DATOS DE DIAGNÓSTICOS</h2>
+           </div>
     """, unsafe_allow_html=True)
 
 
@@ -130,7 +129,6 @@ def save_data(df):
     sheet_by_name.append_rows(df.fillna("").values.tolist())
 
 # ✅ CARGAR DATOS
-st.title("Codificator 3002")
 df_glosary = read_data()
 
 st.info("✍️ Agrega nuevas entradas o elimina filas seleccionadas. Los cambios se guardan automáticamente.")
