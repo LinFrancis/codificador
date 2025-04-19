@@ -9,6 +9,11 @@ from oauth2client.service_account import ServiceAccountCredentials
 import streamlit as st
 import pandas as pd
 
+client = gspread.authorize(credentials)
+sheet_titles = [s.title for s in client.openall()]
+st.write("✅ Sheets your app can access:")
+st.write(sheet_titles)
+
 # =========================
 # CONNECT TO GOOGLE SHEET
 # =========================
