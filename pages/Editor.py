@@ -46,60 +46,26 @@ def save_data(df):
 st.title("Codificator 3001")
 df_glosary = read_data()
 
-st.info("✍️ Edita directamente la tabla, agrega nuevas entradas o elimina filas seleccionadas. Los cambios se guardan automáticamente.")
-
-# =========================
-# 📝 TABLA EDITABLE
-# =========================
-st.subheader("📋 Glosario editable")
-edited_df = st.data_editor(
-    df_glosary,
-    use_container_width=True,
-    num_rows="dynamic",
-    key="editor_table"
-)
-
-if st.button("💾 Guardar cambios en la tabla"):
-    try:
-        save_data(edited_df)
-        st.success("✅ Cambios guardados exitosamente en Google Sheets.")
-    except Exception as e:
-        st.error("❌ Error al guardar los cambios:")
-        st.exception(e)
-
-st.divider()
+st.info("✍️ Agrega nuevas entradas o elimina filas seleccionadas. Los cambios se guardan automáticamente.")
 
 # =========================
 # ➕ AGREGAR NUEVA ENTRADA
 # =========================
 st.subheader("➕ Agregar nueva entrada")
-df_glosary = read_data()
-existing_sources = sorted(df_glosary["source"].dropna().astype(str).unique())
-existing_groups = sorted(df_glosary["group"].dropna().astype(str).unique())
 
-with st.form("add_entry_form", clear_on_submit=True):
-    use_custom_source = st.checkbox("✏️ Escribir nueva fuente")
-    new_source_input = st.text_input("Nueva fuente") if use_custom_source else ""
-    selected_source = st.selectbox("Fuente existente:", existing_sources, key="select_source") if not use_custom_source else ""
-
+with st.form("add_simple_entry_form", clear_on_submit=True):
+    new_source = st.text_input("Fuente")
+    new_group = st.text_input("Grupo")
+    new_code = st.text_input("Código")
     new_text = st.text_area("Texto")
 
-    use_custom_group = st.checkbox("✏️ Escribir nuevo grupo")
-    new_group_input = st.text_input("Nuevo grupo") if use_custom_group else ""
-    selected_group = st.selectbox("Grupo existente:", existing_groups, key="select_group") if not use_custom_group else ""
-
-    new_code = st.text_input("Código")
-
-    if st.form_submit_button("➕ Agregar entrada"):
-        source_val = new_source_input.strip() if use_custom_source else selected_source.strip()
-        group_val = new_group_input.strip() if use_custom_group else selected_group.strip()
-
-        if not new_text.strip() or not source_val or not group_val:
+    if st.form_submit_button("Agregar entrada"):
+        if not new_text.strip() or not new_source.strip() or not new_group.strip():
             st.warning("⚠️ Los campos 'Texto', 'Fuente' y 'Grupo' son obligatorios.")
         else:
             new_row = {
-                "source": source_val,
-                "group": group_val,
+                "source": new_source.strip(),
+                "group": new_group.strip(),
                 "code": new_code.strip(),
                 "text": new_text.strip()
             }
