@@ -221,15 +221,16 @@ with tabs[0]:
 # st.divider()
 
 with tabs[1]:
-    
     # =========================
     # 📊 VISUALIZAR, EDITAR Y ELIMINAR BASE DE DATOS
     # =========================
     st.subheader("📊 Ver, editar y eliminar entradas")
+
+    # Load and prepare data
     df_glosary = read_data()
-    df_glosary["_index"] = df_glosary.index
-    
-    
+    df_glosary["row_id"] = df_glosary.index  # use safe column name
+
+    # Filters
     source_filter = st.selectbox("Filtrar por fuente:", ["Todas"] + sorted(df_glosary['source'].dropna().unique().tolist()))
     group_filter = st.selectbox("Filtrar por grupo:", ["Todas"] + sorted(df_glosary['group'].dropna().unique().tolist()))
 
@@ -239,26 +240,24 @@ with tabs[1]:
     if group_filter != "Todas":
         filtered_df = filtered_df[filtered_df["group"] == group_filter]
 
+    # Display editable table
     edited_df = st.data_editor(
-    filtered_df,  # Keep _index inside the editor
-    num_rows="dynamic",
-    use_container_width=True,
-    key="editor_glosary"
-)
+        filtered_df,
+        num_rows="dynamic",
+        use_container_width=True,
+        key="editor_glosary"
+    )
 
-    # Button to save edited rows
+    # Save changes
     if st.button("💾 Guardar cambios en la tabla filtrada"):
         try:
             full_df = read_data()
-    
-            for i in range(len(edited_df)):
-                row_index = edited_df.loc[i, "_index"]  # ✅ Use _index preserved in the edited_df
-                full_df.loc[row_index, ["source", "group", "code", "text"]] = edited_df.loc[i, ["source", "group", "code", "text"]]
-    
+            for _, row in edited_df.iterrows():
+                idx = int(row["row_id"])
+                full_df.loc[idx, ["source", "group", "code", "text"]] = row[["source", "group", "code", "text"]]
             save_data(full_df)
             st.success("✅ Cambios guardados exitosamente en Google Sheets.")
             st.rerun()
-    
         except Exception as e:
             st.error("❌ Error al guardar los cambios:")
             st.exception(e)
