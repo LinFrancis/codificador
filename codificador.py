@@ -265,7 +265,7 @@ operador = st.sidebar.selectbox("Operador lógico:", options=["AND", "OR"], inde
 # Campo de búsqueda en la barra lateral
 search_query = st.sidebar.text_input("Ingrese término(s) de búsqueda:", value=st.session_state["search_query_default"], key="search_query")
 
-umbral = st.sidebar.slider("🔍 Umbral de coincidencia (fuzz.partial_ratio)", min_value=0, max_value=100, value=70, step=1)
+umbral = st.sidebar.slider("🔍 Umbral de coincidencia (fuzz.partial_ratio)", min_value=0, max_value=100, value=100, step=1)
 
 
 # Botón para guardar la búsqueda actual en el historial
