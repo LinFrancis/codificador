@@ -265,6 +265,9 @@ operador = st.sidebar.selectbox("Operador lógico:", options=["AND", "OR"], inde
 # Campo de búsqueda en la barra lateral
 search_query = st.sidebar.text_input("Ingrese término(s) de búsqueda:", value=st.session_state["search_query_default"], key="search_query")
 
+umbral = st.sidebar.slider("🔍 Umbral de coincidencia (fuzz.partial_ratio)", min_value=0, max_value=100, value=70, step=1)
+
+
 # Botón para guardar la búsqueda actual en el historial
 if st.sidebar.button("Guardar búsqueda"):
     query = search_query.strip()
@@ -306,7 +309,7 @@ def resaltar_texto(texto, terminos):
     return texto
 
 # Función para evaluar cada fila usando fuzzy matching
-def match_row(row, terminos, operador="AND", umbral=70):
+def match_row(row, terminos, operador="AND", umbral=umbral):
     campos = [str(row[col]) for col in ["source", "text", "group", "code"] if col in row and pd.notnull(row[col])]
     combinado = " ".join(campos).lower()
     if operador == "AND":
