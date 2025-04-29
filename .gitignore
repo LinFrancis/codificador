@@ -1,0 +1,10 @@
+# Entorno virtual
+venv_codificator/
+
+# Archivos temporales de Python
+__pycache__/
+*.py[cod]
+
+# Archivos innecesarios del sistema
+.DS_Store
+*.log
