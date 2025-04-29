@@ -38,7 +38,7 @@ st.logo("image/logo_codificator.png", size="large", link=None, icon_image="image
 # ====================
 # 🔐 PASSWORD PROTECTION with session + logout
 # ====================
-PASSWORD = "hellokitty"
+PASSWORD = "daniel"
 
 # Initialize login state
 if "authenticated" not in st.session_state:
