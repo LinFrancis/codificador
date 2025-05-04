@@ -9,12 +9,21 @@ from oauth2client.service_account import ServiceAccountCredentials
 
 from PIL import Image
 
+
+
+from auth_google import *  # Verifica autenticación Google antes de continuar
+
+
 # === Set page config early ===
 st.set_page_config(
     page_title="Codificator 3002 - Dra. Javiera Saavedra Nazer",
     layout="wide",
     initial_sidebar_state="expanded"
 )
+
+
+
+
 
 st.markdown("""
 <style>
@@ -33,43 +42,6 @@ h1, h2, h3, h4, h5, h6, p, label {
 
 st.logo("image/logo_codificator.png", size="large", link=None, icon_image="image/logo_codificator.png")
 
-
-
-# ====================
-# 🔐 PASSWORD PROTECTION with session + logout
-# ====================
-PASSWORD = "daniel"
-
-# Initialize login state
-if "authenticated" not in st.session_state:
-    st.session_state["authenticated"] = False
-
-# Logout button
-if st.session_state["authenticated"]:
-    with st.sidebar:
-        if st.button("🔓 Cerrar sesión"):
-            st.session_state["authenticated"] = False
-            st.rerun()
-
-# Login screen
-if not st.session_state["authenticated"]:
-    st.image("image/logo_codificator_4.png", width=300)
-    st.markdown("""
-    ## Bienvenida Dra. Javiera Saavedra Nazer  
-    Soy el **Codificator 3002 🤖** y estoy a Su servicio.
-
-    Para continuar, por favor ingrese la contraseña en el campo a continuación.  
-    Si tiene problemas de acceso, contacte a su encargado de sistemas.
-    """)
-    password = st.text_input("Contraseña:", type="password")
-    if password == PASSWORD:
-        st.session_state["authenticated"] = True
-        st.rerun()
-    elif password:
-        st.error("Contraseña incorrecta.")
-        st.stop()
-    else:
-        st.stop()
 
 
 def connect_to_gsheet(spreadsheet_name, sheet_name):

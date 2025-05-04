@@ -3,7 +3,7 @@ import pandas as pd
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 
-# ✅ CONFIGURACIÓN INICIAL
+
 st.set_page_config(
     page_title="Codificator 3002 - Dra. Javiera Saavedra Nazer",
     layout="wide",
@@ -26,53 +26,6 @@ h1, h2, h3, h4, h5, h6, p, label {
 """, unsafe_allow_html=True)
 
 st.logo("image/logo_codificator.png", size="large", link=None, icon_image="image/logo_codificator.png")
-
-
-# ====================
-# 🔐 PASSWORD PROTECTION with session + logout
-# ====================
-PASSWORD = "hellokitty"
-
-# Initialize login state
-if "authenticated" not in st.session_state:
-    st.session_state["authenticated"] = False
-
-# Logout button
-if st.session_state["authenticated"]:
-    with st.sidebar:
-        if st.button("🔓 Cerrar sesión"):
-            st.session_state["authenticated"] = False
-            st.rerun()
-
-# Login screen
-if not st.session_state["authenticated"]:
-    col1, col2 = st.columns([1, 3])
-
-    with col1:
-        st.image("image/logo_codificator_4.png", width=200)
-    with col2:
-        st.markdown("""
-        ### Estimada Dra. Javiera Saavedra Nazer""")  
-        st.warning('El acceso a esta sección está restringido a personas autorizadas', icon="🔐")
-        st.markdown("""
-        Por favor, introduzca la contraseña correspondiente para continuar.  
-        Si requiere asistencia, comuníquese con Su equipo de soporte.
-        """)
-
-        
-
-        
-        password = st.text_input("Contraseña:", type="password")
-        if password == PASSWORD:
-            st.session_state["authenticated"] = True
-            st.rerun()
-        elif password:
-            st.error("Contraseña incorrecta.")
-            st.stop()
-        else:
-            st.stop()
-
-    
 
 
 # Layout in columns (image on left, welcome box on right)
