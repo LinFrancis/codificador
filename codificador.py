@@ -9,6 +9,16 @@ from oauth2client.service_account import ServiceAccountCredentials
 
 from PIL import Image
 
+
+# === Set page config early ===
+st.set_page_config(
+    page_title="Codificator 3002 - Dra. Javiera Saavedra Nazer",
+    layout="wide",
+    initial_sidebar_state="expanded"
+)
+
+
+
 # --- Autenticación básica con usuario y contraseña desde secrets.toml ---
 def verificar_credenciales(usuario_input, contrasena_input):
     usuario_valido = st.secrets["oauth"]["username"]
@@ -42,13 +52,6 @@ with st.sidebar:
 
 
 
-
-# # === Set page config early ===
-# st.set_page_config(
-#     page_title="Codificator 3002 - Dra. Javiera Saavedra Nazer",
-#     layout="wide",
-#     initial_sidebar_state="expanded"
-# )
 
 
 
