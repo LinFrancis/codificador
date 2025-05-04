@@ -4,11 +4,46 @@ import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 
 
-st.set_page_config(
-    page_title="Codificator 3002 - Dra. Javiera Saavedra Nazer",
-    layout="wide",
-    initial_sidebar_state="expanded"
-)
+# --- Autenticación básica con usuario y contraseña desde secrets.toml ---
+def verificar_credenciales(usuario_input, contrasena_input):
+    usuario_valido = st.secrets["oauth"]["username"]
+    contrasena_valida = st.secrets["oauth"]["password"]
+
+    return usuario_input == usuario_valido and contrasena_input == contrasena_valida
+
+if "autenticado" not in st.session_state:
+    st.session_state.autenticado = False
+
+if not st.session_state.autenticado:
+    with st.form("login_form"):
+        st.markdown("## Iniciar sesión")
+        usuario_input = st.text_input("Usuario")
+        contrasena_input = st.text_input("Contraseña", type="password")
+        submitted = st.form_submit_button("Entrar")
+
+        if submitted:
+            if verificar_credenciales(usuario_input, contrasena_input):
+                st.session_state.autenticado = True
+                st.rerun()
+            else:
+                st.error("Credenciales inválidas. Intenta nuevamente.")
+    st.stop()
+
+with st.sidebar:
+    if st.button("Cerrar sesión"):
+        st.session_state.autenticado = False
+        st.rerun()
+
+
+
+
+
+
+# st.set_page_config(
+#     page_title="Codificator 3002 - Dra. Javiera Saavedra Nazer",
+#     layout="wide",
+#     initial_sidebar_state="expanded"
+# )
 
 st.markdown("""
 <style>

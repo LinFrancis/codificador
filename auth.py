@@ -14,9 +14,9 @@ oauth2 = OAuth2Component(
     token_endpoint="https://oauth2.googleapis.com/token"
 )
 
-# Definir el alcance
+# Definir el alcance y la URI de redirección
 scope = "openid email"
-redirect_uri = "https://codificator.streamlit.app"
+redirect_uri = "https://codificator.streamlit.app/"
 
 # Inicializar variables de sesión si no existen
 if "token" not in st.session_state:
@@ -26,6 +26,12 @@ if "user_email" not in st.session_state:
 
 # Lista de correos autorizados
 correos_autorizados = ["francis.mason@gmail.com", "javierasaavedranazer@gmail.com"]
+
+# Botón para cerrar sesión
+if st.sidebar.button("Cerrar sesión"):
+    st.session_state.token = None
+    st.session_state.user_email = None
+    st.experimental_rerun()
 
 # Verificar si ya hay sesión válida
 if st.session_state.token and st.session_state.user_email:
@@ -38,7 +44,7 @@ else:
         key="google_login"
     )
 
-    if token and "access_token" in token:
+    if token and "access_token" in token and not st.session_state.token:
         user_info = requests.get(
             "https://www.googleapis.com/oauth2/v3/userinfo",
             headers={"Authorization": f"Bearer {token['access_token']}"}
@@ -48,10 +54,11 @@ else:
         if correo in correos_autorizados:
             st.session_state.token = token
             st.session_state.user_email = correo
-            st.rerun()  # Reinicia la app solo una vez después del login
+            st.experimental_set_query_params()  # Limpia los parámetros de la URL
+            st.rerun()
         else:
             st.error("Este correo no está autorizado.")
             st.stop()
-    else:
+    elif not token:
         st.warning("Por favor, inicia sesión para continuar.")
         st.stop()
