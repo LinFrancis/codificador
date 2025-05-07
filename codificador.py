@@ -212,8 +212,10 @@ st.markdown(
 # Layout in columns (image on left, welcome box on right)
 col1, col2 = st.columns([1, 3])
 
+
+
 with col1:
-    st.image("image/logo_codificator_2.png", width=200)
+    st.image(logo_path, width=200)
 
 with col2:
     st.markdown("""
