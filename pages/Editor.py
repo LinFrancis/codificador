@@ -63,15 +63,41 @@ h1, h2, h3, h4, h5, h6, p, label {
 </style>
 """, unsafe_allow_html=True)
 
-st.logo("image/logo_codificator.png", size="large", link=None, icon_image="image/logo_codificator.png")
+# Lista de nombres de archivos (sin extensión)
+logos_codificator_list = [
+    "codificator_hello_kitty_minina",
+    "codificator_hello_kitty_minina_02",
+    "codificator_hello_kitty_minina_03",
+    "codificator_kuromi",
+    "codificator_kuromi_02",
+    "codificator_kuromi_03",
+    "codificator_kuromi_04",
+    "codificator_kuromi_05",
+    "codificator_kuromi_06",
+    "codificator_kuromi_07",
+    "logo_codificator",
+    "logo_codificator_2",
+    "codificator_hangyodon_01"
+]
+
+# Elegir un archivo al azar
+selected_logo = random.choice(logos_codificator_list)
+
+# Construir la ruta al archivo
+logo_path = f"image/{selected_logo}.png"
+
+# Mostrar el logo aleatorio
+st.logo(logo_path, size="large", link=None, icon_image=logo_path)
+
 
 
 # Layout in columns (image on left, welcome box on right)
 col1, col2 = st.columns([1, 3])
 
-with col1:
-    st.image("image/logo_codificator_2.png", width=200)
 
+with col1:
+    st.image(logo_path, width=200)
+    
 with col2:
     st.markdown("""
     <style>
