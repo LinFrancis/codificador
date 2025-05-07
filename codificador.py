@@ -6,6 +6,8 @@ import os
 from rapidfuzz import fuzz
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
+import random
+
 
 from PIL import Image
 
