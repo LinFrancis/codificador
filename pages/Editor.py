@@ -65,6 +65,33 @@ h1, h2, h3, h4, h5, h6, p, label {
 </style>
 """, unsafe_allow_html=True)
 
+frases_buda = [
+    "El odio no cesa con el odio, sino con el amor. – Dhammapada, verso 5",
+    "La mente lo es todo. En lo que piensas, te conviertes. – Dhammapada, verso 1",
+    "Más vale conquistarse a uno mismo que ganar mil batallas. – Dhammapada, verso 103",
+    "No hay fuego como la pasión, ni cadena como el odio. – Dhammapada, verso 251",
+    "Ni siquiera un dios puede cambiar el pasado. – Anguttara Nikaya 5.57",
+    "El insensato duerme como si ya estuviera muerto, pero el sabio está despierto y vive con atención. – Dhammapada, verso 21",
+    "Así como una roca sólida no se mueve con el viento, el sabio permanece impasible ante la alabanza y la culpa. – Dhammapada, verso 81",
+    "No habites en el pasado, no sueñes con el futuro, concentra la mente en el momento presente. – Majjhima Nikaya 131",
+    "Una mente disciplinada trae felicidad. – Dhammapada, verso 35",
+    "Así como una flor hermosa pero sin fragancia, así son las palabras sin acción. – Dhammapada, verso 51",
+    "Quien observa su mente con atención, encuentra libertad. – Satipatthana Sutta",
+    "La raíz del sufrimiento es el apego. – Samyutta Nikaya 56.11",
+    "Todo lo que tiene un comienzo tiene un final. – Majjhima Nikaya 131",
+    "El dolor es inevitable, pero el sufrimiento es opcional. – Sutta Nipāta 4.16",
+    "Lo que piensas, lo serás. Lo que sientas, lo atraerás. Lo que imagines, lo crearás. – Dhammapada, resumen",
+    "Deja de lado lo que no es útil. – Majjhima Nikaya 22",
+    "El sabio no se apega a lo que ve ni a lo que oye. – Sutta Nipāta 4.3",
+    "El que envidia no encontrará la paz del corazón. – Dhammapada, verso 290",
+    "No dañes a los demás con lo que te causa dolor a ti mismo. – Udana 5.18",
+    "Cuando uno se libera del odio, despierta. – Dhammapada, verso 87"
+]
+
+# Mostrar una frase aleatoria como caption
+st.caption(random.choice(frases_buda))
+
+
 # Lista de nombres de archivos (sin extensión)
 logos_codificator_list = [
     "codificator_hello_kitty_minina",
