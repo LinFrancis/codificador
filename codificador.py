@@ -170,7 +170,9 @@ logos_codificator_list = [
     "codificator_kuromi_07",
     "logo_codificator",
     "logo_codificator_2",
-    "codificator_hangyodon_01"
+    "codificator_hangyodon_01",
+    "ChatGPT Image May 19, 2025, 12_25_50 AM",
+    "ChatGPT Image May 19, 2025, 12_29_33 AM,
 ]
 
 # Elegir un archivo al azar
