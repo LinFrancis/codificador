@@ -1,4 +1,3 @@
-﻿streamlit==1.45.0
 streamlit==1.45.0
 git+https://github.com/jrieke/streamlit-oauth.git
 pandas==2.0.3
