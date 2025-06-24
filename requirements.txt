@@ -1,5 +1,5 @@
 streamlit==1.45.0
-git+https://github.com/jrieke/streamlit-oauth.git
+https://github.com/jrieke/streamlit-oauth/archive/refs/heads/main.zip
 pandas==2.0.3
 numpy==1.25.2
 
