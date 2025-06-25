@@ -164,7 +164,7 @@ st.markdown(
 
     /* Insertamos el logo manualmente como background */
     div[data-testid="stSidebarNav"]::before {{
-        content: "Codificator 🎀";
+        content: "Codificator";
         font-size: 1.2rem;
         font-weight: bold;
         font-family: "Comic Sans MS", "Segoe UI", cursive;
