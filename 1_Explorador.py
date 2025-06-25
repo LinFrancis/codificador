@@ -31,7 +31,7 @@ st.set_page_config(
 
 #     /* Título decorado arriba del menú lateral */
 #     div[data-testid="stSidebarNav"]::before {
-#         content: "🎀 CODIFICATOR 4K";
+#         content: "Codificator";
 #         display: block;
 #         font-size: 1.6rem;
 #         font-weight: bold;
@@ -129,7 +129,7 @@ selected_logo = random.choice(logos_codificator_list)
 logo_path = f"image/{selected_logo}.png"
 
 
-logo_path_sidebar = "image/codificator_hello_kitty_minina_02.png"
+logo_path_sidebar = "image/codificator_hello_kitty_minina_03.png"
 ## Mostrar el logo aleatorio
 # st.logo(logo_path, size="large", link=None, icon_image=logo_path)
 
