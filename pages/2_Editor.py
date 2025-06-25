@@ -2,17 +2,12 @@ import streamlit as st
 import pandas as pd
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
-<<<<<<< HEAD:pages/Editor.py
-import random
-
-=======
 import base64
->>>>>>> 49a384b (✨ Hello Kitty UI update and image assets added):pages/2_Editor.py
 
 
 
 st.set_page_config(
-    page_title="Codificator 3002 - Dra. Javiera Saavedra Nazer",
+    page_title="Codificator 4K - Dra. Javiera Saavedra Nazer",
     layout="wide",
     initial_sidebar_state="expanded"
 )
@@ -69,116 +64,6 @@ h1, h2, h3, h4, h5, h6, p, label {
 </style>
 """, unsafe_allow_html=True)
 
-<<<<<<< HEAD:pages/Editor.py
-frases_buda = [
-    "El odio no cesa con el odio, sino con el amor. – Dhammapada, verso 5",
-    "La mente lo es todo. En lo que piensas, te conviertes. – Dhammapada, verso 1",
-    "Más vale conquistarse a uno mismo que ganar mil batallas. – Dhammapada, verso 103",
-    "No hay fuego como la pasión, ni cadena como el odio. – Dhammapada, verso 251",
-    "Ni siquiera un dios puede cambiar el pasado. – Anguttara Nikaya 5.57",
-    "El insensato duerme como si ya estuviera muerto, pero el sabio está despierto y vive con atención. – Dhammapada, verso 21",
-    "Así como una roca sólida no se mueve con el viento, el sabio permanece impasible ante la alabanza y la culpa. – Dhammapada, verso 81",
-    "No habites en el pasado, no sueñes con el futuro, concentra la mente en el momento presente. – Majjhima Nikaya 131",
-    "Una mente disciplinada trae felicidad. – Dhammapada, verso 35",
-    "Así como una flor hermosa pero sin fragancia, así son las palabras sin acción. – Dhammapada, verso 51",
-    "Quien observa su mente con atención, encuentra libertad. – Satipatthana Sutta",
-    "La raíz del sufrimiento es el apego. – Samyutta Nikaya 56.11",
-    "Todo lo que tiene un comienzo tiene un final. – Majjhima Nikaya 131",
-    "El dolor es inevitable, pero el sufrimiento es opcional. – Sutta Nipāta 4.16",
-    "Lo que piensas, lo serás. Lo que sientas, lo atraerás. Lo que imagines, lo crearás. – Dhammapada, resumen",
-    "Deja de lado lo que no es útil. – Majjhima Nikaya 22",
-    "El sabio no se apega a lo que ve ni a lo que oye. – Sutta Nipāta 4.3",
-    "El que envidia no encontrará la paz del corazón. – Dhammapada, verso 290",
-    "No dañes a los demás con lo que te causa dolor a ti mismo. – Udana 5.18",
-    "Cuando uno se libera del odio, despierta. – Dhammapada, verso 87",
-    "Todo es efímero. – Dhammapada, verso 277",
-    "Dominarse a sí mismo es una victoria mayor que conquistar a otros. – Dhammapada, verso 103",
-    "Las palabras tienen el poder de destruir y sanar. – Sutta Nipāta 3.9",
-    "El camino no está en el cielo, el camino está en el corazón. – Dhammapada, verso 183",
-    "La paz viene de dentro. No la busques fuera. – Majjhima Nikaya 131",
-    "Un pensamiento impuro arruina todo. – Dhammapada, verso 42",
-    "La sabiduría es la mejor guía. – Anguttara Nikaya 3.65",
-    "Sé una luz para ti mismo. – Mahaparinibbana Sutta",
-    "La ignorancia es la peor forma de oscuridad. – Samyutta Nikaya 35.191",
-    "La mente es difícil de dominar, pero se puede entrenar. – Dhammapada, verso 35",
-    "No hay mayor riqueza que el contentamiento. – Dhammapada, verso 204",
-    "La compasión es el lenguaje del corazón. – Sutta Nipāta 1.8",
-    "No creas nada simplemente porque lo diga una tradición. – Kalama Sutta",
-    "Quien se ama a sí mismo, no daña a los demás. – Udana 5.1",
-    "El cuerpo es frágil, como una vasija de barro. – Dhammapada, verso 40",
-    "La sabiduría nace del silencio. – Sutta Nipāta 2.12",
-    "Nada es permanente. – Dhammapada, verso 277",
-    "La verdadera libertad es interior. – Majjhima Nikaya 140",
-    "Mejor una palabra que apacigüe que mil sin sentido. – Dhammapada, verso 100",
-    "Donde hay amor, no hay miedo. – Sutta Nipāta 2.13",
-    "El camino es el noble óctuple sendero. – Dhammapada, verso 191",
-    "No te aferres a nada, todo cambia. – Samyutta Nikaya 22.59",
-    "El sabio reconoce la transitoriedad de todo. – Dhammapada, verso 277",
-    "El que practica la verdad vive feliz. – Dhammapada, verso 24",
-    "Conquistar el ego es la verdadera victoria. – Dhammapada, verso 233",
-    "La vida es preciosa. No la desperdicies. – Sutta Nipāta 1.1",
-    "El deseo es la raíz de todo sufrimiento. – Samyutta Nikaya 56.11",
-    "La pureza y la impureza dependen de uno mismo. – Dhammapada, verso 165",
-    "Quien camina con sabiduría no teme a la muerte. – Dhammapada, verso 128",
-    "Todo ser teme el castigo. Comparte esa comprensión. – Dhammapada, verso 129",
-    "La serenidad es la mayor bendición. – Sutta Nipāta 2.4",
-    "La meditación trae claridad. – Dhammapada, verso 282",
-    "No acumules lo que no necesitas. – Majjhima Nikaya 22",
-    "Quien se libera del deseo encuentra la paz. – Samyutta Nikaya 35.28",
-    "No hay felicidad superior a la paz interior. – Dhammapada, verso 203",
-    "El sabio vive en armonía consigo mismo. – Dhammapada, verso 95",
-    "El cuerpo se desgasta, pero la mente puede florecer. – Dhammapada, verso 146",
-    "Quien actúa con rectitud es invulnerable. – Dhammapada, verso 39",
-    "La amabilidad es una joya que nunca se pierde. – Sutta Nipāta 1.8",
-    "Solo tú puedes recorrer tu camino. – Dhammapada, verso 276",
-    "El necio duerme sin rumbo, el sabio se cultiva. – Dhammapada, verso 20",
-    "La verdad no necesita defensa. – Majjhima Nikaya 58",
-    "El sabio no discute por necedad. – Dhammapada, verso 6",
-    "No seas esclavo del placer, ni del dolor. – Sutta Nipāta 2.13",
-    "Es mejor vivir solo que en mala compañía. – Dhammapada, verso 330",
-    "El sabio evita la compañía de necios. – Dhammapada, verso 61",
-    "Nada puede esconderse por mucho tiempo: el sol, la luna y la verdad. – Dhammapada, verso 128",
-    "Haz el bien, evita el mal, y purifica tu mente. – Dhammapada, verso 183",
-    "Cuando el sabio habla, el mundo escucha. – Sutta Nipāta 3.2",
-    "La belleza externa no es nada sin la belleza del alma. – Dhammapada, verso 147",
-    "El que se autoconoce es invencible. – Dhammapada, verso 160",
-    "La vida bien vivida es breve pero valiosa. – Dhammapada, verso 110",
-    "No te lamentes por lo que ya pasó. – Samyutta Nikaya 22.59",
-    "La luz de una vela puede encender miles sin apagarse. – Sutta Nipāta 2.2"
-]
-
-
-# Mostrar una frase aleatoria como caption
-st.caption(random.choice(frases_buda))
-
-
-# Lista de nombres de archivos (sin extensión)
-logos_codificator_list = [
-    "codificator_hello_kitty_minina",
-    "codificator_hello_kitty_minina_02",
-    "codificator_hello_kitty_minina_03",
-    "codificator_kuromi",
-    "codificator_kuromi_02",
-    "codificator_kuromi_03",
-    "codificator_kuromi_04",
-    "codificator_kuromi_05",
-    "codificator_kuromi_06",
-    "codificator_kuromi_07",
-    "logo_codificator",
-    "logo_codificator_2",
-    "codificator_hangyodon_01"
-]
-
-# Elegir un archivo al azar
-selected_logo = random.choice(logos_codificator_list)
-
-# Construir la ruta al archivo
-logo_path = f"image/{selected_logo}.png"
-
-# Mostrar el logo aleatorio
-st.logo(logo_path, size="large", link=None, icon_image=logo_path)
-
-=======
 
 logo_path = "image/codificator_hello_kitty_minina_02.png"
 
@@ -225,7 +110,6 @@ st.markdown(
     """,
     unsafe_allow_html=True
 )
->>>>>>> 49a384b (✨ Hello Kitty UI update and image assets added):pages/2_Editor.py
 
 
 # Layout in columns (image on left, welcome box on right)
