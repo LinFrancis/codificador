@@ -65,7 +65,7 @@ h1, h2, h3, h4, h5, h6, p, label {
 """, unsafe_allow_html=True)
 
 
-logo_path = "image/codificator_hello_kitty_minina_02.png"
+logo_path = "image/codificator_hello_kitty_minina_03.png"
 
 # Codificar logo a base64
 with open(logo_path, "rb") as f:
@@ -95,7 +95,7 @@ st.markdown(
 
     /* Insertamos el logo manualmente como background */
     div[data-testid="stSidebarNav"]::before {{
-        content: "CODIFICATOR 4K 🎀";
+        content: "Codificator";
         font-size: 1.2rem;
         font-weight: bold;
         font-family: "Comic Sans MS", "Segoe UI", cursive;
